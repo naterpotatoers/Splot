@@ -1,0 +1,4 @@
+float32 joint1_angle
+float32 joint2_angle
+float32 joint3_angle
+bool position_reachable

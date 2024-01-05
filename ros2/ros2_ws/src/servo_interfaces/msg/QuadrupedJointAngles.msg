@@ -1,0 +1,4 @@
+servo_interfaces/LegJointAngles leg_front_right
+servo_interfaces/LegJointAngles leg_front_left
+servo_interfaces/LegJointAngles leg_rear_left
+servo_interfaces/LegJointAngles leg_rear_right

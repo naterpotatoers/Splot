@@ -1,0 +1,1 @@
+ros2 topic pub /joint_angles servo_interfaces/QuadrupedJointAngles "{leg_front_right: {joint1_angle: 0, joint2_angle: 0, joint3_angle: 0}, leg_front_left: {joint1_angle: 0, joint2_angle: 0, joint3_angle: 0}, leg_rear_left: {joint1_angle: 0, joint2_angle: 0, joint3_angle: 0}, leg_rear_right: {joint1_angle: 0, joint2_angle: 0, joint3_angle: 0}}"

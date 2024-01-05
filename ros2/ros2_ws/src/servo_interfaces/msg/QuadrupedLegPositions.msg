@@ -1,0 +1,4 @@
+geometry_msgs/Point leg_front_right
+geometry_msgs/Point leg_front_left
+geometry_msgs/Point leg_rear_left
+geometry_msgs/Point leg_rear_right
