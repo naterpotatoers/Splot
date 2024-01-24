@@ -1,0 +1,13 @@
+launch:
+
+- node:
+    pkg: 'simple_walk'
+    exec: 'simple_walk'
+
+- node:
+    pkg: 'quadruped_kinematics'
+    exec: 'quadruped_kinematics'
+
+- node:
+    pkg: 'servo_control'
+    exec: 'dual_pca9685_driver'

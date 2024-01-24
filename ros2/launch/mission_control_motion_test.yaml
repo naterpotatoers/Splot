@@ -1,0 +1,25 @@
+launch:
+
+- node:
+    pkg: 'joy'
+    exec: 'joy_node'
+    param:
+    -
+      name: 'coalesce_interval_ms'
+      value: 50
+
+- node:
+    pkg: 'mission_control_joy'
+    exec: 'mission_control_joy'
+
+- node:
+    pkg: 'mission_control_motion_test'
+    exec: 'mission_control_motion_test'
+
+- node:
+    pkg: 'quadruped_kinematics'
+    exec: 'quadruped_kinematics'
+
+- node:
+    pkg: 'servo_control'
+    exec: 'dual_pca9685_driver'

@@ -1,0 +1,13 @@
+launch:
+
+- node:
+    pkg: 'joy'
+    exec: 'joy_node'
+    param:
+    -
+      name: 'coalesce_interval_ms'
+      value: 50
+
+- node:
+    pkg: 'mission_control_joy'
+    exec: 'mission_control_joy'
