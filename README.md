@@ -7,7 +7,7 @@ A quadruped robot built for AMD's Pervasive AI Contest 2024.
 * Compute platform: Raspberry Pi 3 Model B+
 * Operating system: Ubuntu Server 22.04.3 LTS (64-bit)
 * Python: 3.10.12
-* ROS: ROS2 Iron Irwini (`apt install ros-dev-tools ros-iron-ros-base`)
+* ROS: ROS2 Iron Irwini (follow the [installation instructions](https://docs.ros.org/en/iron/Installation/Ubuntu-Install-Debians.html) and choose `ros-iron-ros-base`)
 
 Run `git clone --recurse-submodules [git repo url]` to clone this repository with submodules (i.e. `joystick_drivers`).
 
