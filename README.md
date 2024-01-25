@@ -11,7 +11,7 @@ A quadruped robot built for AMD's Pervasive AI Contest 2024.
 
 Run `git clone --recurse-submodules [git repo url]` to clone this repository with submodules (i.e. `joystick_drivers`).
 
-Follow the installation instructions on the [joystick_drivers wiki](https://wiki.ros.org/joystick_drivers).
+For gamepad support, follow the installation instructions on the [joystick_drivers wiki](https://wiki.ros.org/joystick_drivers). Additionally, `apt install ros-iron-diagnostic-updater libx11-dev libxext-dev`.
 
 Install python dependencies using `python3 -m pip install -r Splot/requirements.txt`. Note that legacy code using the PCA9685 boards also requires `adafruit-circuitpython-servokit`.
 
