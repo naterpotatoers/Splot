@@ -30,11 +30,10 @@ Install python dependencies using `python3 -m pip install -r Splot/requirements.
 * [joystick_drivers](https://wiki.ros.org/joystick_drivers) - ROS2 nodes for receiving joystick/gamepad input
 * [robot_localization](https://github.com/cra-ros-pkg/robot_localization) - ROS2 sensor fusion package implementing extended kalman filtering and unscented kalman filtering
 * [adafruit-circuitpython-bno08x](https://docs.circuitpython.org/projects/bno08x/en/latest/) - Python package for interfacing with BNO08x family 9-axis absolute orientation IMUs
-* [adafruit gps](https://docs.circuitpython.org/projects/gps/en/latest/) - Python package for interfacing with Adafruit's PA1616D "Ultimate GPS Breakout"
+* [adafruit circuitpython-gps](https://docs.circuitpython.org/projects/gps/en/latest/) - Python package for interfacing with Adafruit's PA1616D "Ultimate GPS Breakout"
 * [pyserial](https://pypi.org/project/pyserial/) - Python package for serial communication
 
 
 ## Other Notes
 By default, Ubuntu does not allow access to the Raspberry Pi's built-in RX/TX serial pins, which we use to communicate with the GPS. We followed [these instructions](https://raspberrypi.stackexchange.com/a/116860) to enable hardware serial access.
 
-See `requirements.txt` for Python package dependencies.

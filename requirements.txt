@@ -1,1 +1,4 @@
 RPi.GPIO
+pyserial
+adafruit-circuitpython-bno08x
+adafruit-circuitpython-gps
