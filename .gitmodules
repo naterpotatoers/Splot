@@ -1,3 +1,7 @@
 [submodule "ros2/ros2_joy_ws/src/joystick_drivers"]
 	path = ros2/ros2_joy_ws/src/joystick_drivers
 	url = git@github.com:ros-drivers/joystick_drivers.git
+[submodule "ros2/ros2_robot_localization_ws/src/robot_localization"]
+	path = ros2/ros2_robot_localization_ws/src/robot_localization
+	url = https://github.com/cra-ros-pkg/robot_localization
+	branch = ros2
