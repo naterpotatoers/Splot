@@ -29,7 +29,7 @@ class GpsSensor:
 
     def read(self):
         # self.gps.update()
-        current_time = 1 # replace w/ time.monotonic()
+        current_time = time.monotonic()
         time_difference = current_time - self.last_print
         if (time_difference >= 1.0) and self.is_connected:
             self.last_print = current_time
