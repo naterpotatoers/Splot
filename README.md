@@ -17,12 +17,16 @@ Install python dependencies using `python3 -m pip install -r Splot/requirements.
 
 
 ## Building
-* `cd` into `Splot/ros2/ros2_ws` and run `colcon build --symlink-install` to build the Splot ROS2 packages.
-* `cd` into `Splot/ros2/ros2_joy_ws` and run `colcon build --symlink-install` again to build the `joystick_drivers` package.
+* Run `sudo rosdep init` to initialize rosdep if you have not done so already.
+* Run `rosdep update` to update rosdep index
+* For each of `Splot/ros2/ros2_joy_ws`, `Splot/ros2/ros2_robot_localization_ws`, and `Splot/ros2/ros2_ws`:
+* `cd` into the workspace directory (i.e. `Splot/ros2/ros2_robot_localization_ws`)
+* Run `rosdep install --from-paths src -y --ignore-src` to install dependencies
+* Run `colcon build --symlink-install` to build the packages
 
 
 ## Running
-* Source the ROS workspaces using `source Splot/ros2/ros2_ws/install/local_setup.bash` and `source Splot/ros2/ros2_joy_ws/install/local_setup.bash` (these need to be run every time you login/reboot)
+* Source the ROS workspaces using `source Splot/ros2/ros2_ws/install/local_setup.bash`, `source Splot/ros2/ros2_robot_localization_ws/install/local_setup.bash`, and `source Splot/ros2/ros2_joy_ws/install/local_setup.bash` (these need to be run every time you login/reboot)
 * `cd` into `Splot/ros2/launch` and run `ros2 launch mission_control_joy.yaml` to run the gamepad input demo, or choose a different launch file
 
 
