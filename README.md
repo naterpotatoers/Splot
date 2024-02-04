@@ -4,7 +4,7 @@ A quadruped robot built for AMD's Pervasive AI Contest 2024.
 
 
 ## Installing
-* Compute platform: Raspberry Pi 3 Model B+
+* Compute platform: Raspberry Pi 4 8Gb Model
 * Operating system: Ubuntu Server 22.04.3 LTS (64-bit)
 * Python: 3.10.12
 * ROS: ROS2 Iron Irwini (follow the [installation instructions](https://docs.ros.org/en/iron/Installation/Ubuntu-Install-Debians.html) and choose `ros-iron-ros-base`)
