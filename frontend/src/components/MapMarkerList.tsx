@@ -1,14 +1,20 @@
 import { MapMarker } from "../types";
 import { Trash2 } from "lucide-react";
 
-export default function MapMarkerList({
-  markers,
-}: {
+type MapMarkerListProps = {
   markers: Array<MapMarker>;
-}) {
+  setMarkers: (markers: Array<MapMarker>) => void;
+};
+
+export default function MapMarkerList({ markers, setMarkers }: MapMarkerListProps) {
+
+  const handleDelete = (coordinateId: string) => {
+    const newMarkers = markers.filter((coordinate) => coordinate.id !== coordinateId);
+    setMarkers(newMarkers);
+  };
+
   return (
     <div>
-      <h2>MapMarkerList</h2>
       <ol>
         {markers.map((coordinate: MapMarker) => (
           <li
@@ -20,7 +26,8 @@ export default function MapMarkerList({
               <p>
                 {coordinate.coords.lat},{coordinate.coords.lng}
               </p>
-              <button>
+              <p>{coordinate.desc}</p>
+              <button id="delete" onClick={() => handleDelete(coordinate.id)}>
                 <Trash2 />
               </button>
             </div>
