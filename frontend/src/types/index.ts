@@ -1,10 +1,10 @@
-export type GpsCoordinate = {
-  latitude: number;
-  longitude: number;
+export type MapCoordinate = {
+  lat: number;
+  lng: number;
 };
 
-export type GpsMarker = {
+export type MapMarker = {
   id: string;
-  gpsCoordinate: GpsCoordinate;
-  description: string;
+  desc: string;
+  coords: MapCoordinate;
 };

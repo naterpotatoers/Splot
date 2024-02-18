@@ -1,11 +1,12 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { GpsCoordinate } from "../types";
+import { MapCoordinate } from "../types";
 
-export default function Map({ latitude, longitude }: GpsCoordinate) {
+export default function Map({ lat, lng }: MapCoordinate) {
+  // const center = getMapCenter();
   return (
     <MapContainer
       style={{ height: "100%", width: "100%", minHeight: "500px" }}
-      center={[latitude, longitude]}
+      center={{ lat, lng }}
       zoom={12}
       scrollWheelZoom={false}
     >
@@ -13,10 +14,7 @@ export default function Map({ latitude, longitude }: GpsCoordinate) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[latitude, longitude]}>
-        <Popup>Last known location</Popup>
-      </Marker>
-      <Marker position={[latitude, longitude]}>
+      <Marker position={{lat, lng}}>
         <Popup>Last known location</Popup>
       </Marker>
     </MapContainer>

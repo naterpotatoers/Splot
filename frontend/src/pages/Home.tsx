@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       Home
-      <Map latitude={36.7378} longitude={-119.73} />
+      <Map lat={36.7378} lng={-119.73} />
       <MapMarkerList markers={MAP_MARKERS} />
     </div>
   );
