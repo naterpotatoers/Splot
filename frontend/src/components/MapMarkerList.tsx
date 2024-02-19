@@ -1,20 +1,31 @@
-import { MapMarker } from "../types";
-import { Trash2 } from "lucide-react";
+import { MapMarker } from '../types';
+import { Trash2 } from 'lucide-react';
+import MapMarkerInput from './MapMarkerInput';
 
 type MapMarkerListProps = {
   markers: Array<MapMarker>;
   setMarkers: (markers: Array<MapMarker>) => void;
 };
 
-export default function MapMarkerList({ markers, setMarkers }: MapMarkerListProps) {
-
-  const handleDelete = (coordinateId: string) => {
-    const newMarkers = markers.filter((coordinate) => coordinate.id !== coordinateId);
-    setMarkers(newMarkers);
+export default function MapMarkerList({
+  markers,
+  setMarkers,
+}: MapMarkerListProps) {
+  const handleDelete = (id: string) => {
+    const result = markers.filter(
+      (coordinate) => coordinate.id !== id,
+    );
+    setMarkers(result);
   };
+
+  const handleNew = (newItem: MapMarker) => {
+    setMarkers([...markers, newItem]);
+  }
 
   return (
     <div>
+      <h2>Map Marker List</h2>
+      <MapMarkerInput handleNew={handleNew} />
       <ol>
         {markers.map((coordinate: MapMarker) => (
           <li

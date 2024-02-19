@@ -1,6 +1,7 @@
-import { MapCoordinate, MapMarker } from "./types";
+import { MapCoordinate, MapMarker } from './types';
 
 export function getMapCenter(markers: Array<MapMarker>): MapCoordinate {
+  if (markers.length === 0) return { lat: 0, lng: 0 };
   const lat =
     markers.reduce((acc, marker) => acc + marker.coords.lat, 0) /
     markers.length;

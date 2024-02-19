@@ -1,20 +1,24 @@
-import { Plus } from "lucide-react";
-import React from "react";
-import { MapMarker } from "../types";
+import { Plus } from 'lucide-react';
+import React from 'react';
+import { MapMarker } from '../types';
 
 type MapMarkerInputProps = {
-  setMarkers: React.Dispatch<React.SetStateAction<Array<MapMarker>>>;
+  handleNew: (newMarker: MapMarker) => void;
 };
 
-export default function MapMarkerInput({ setMarkers }: MapMarkerInputProps) {
+export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const lat = parseFloat(form.lat.value);
     const lng = parseFloat(form.lng.value);
     const desc = form.desc.value;
-    const newMarker = { id: Date.now(), coords: { lat, lng }, desc };
-    setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+    const newMarker: MapMarker = {
+      id: Date.now().toString(),
+      coords: { lat, lng },
+      desc,
+    };
+    handleNew(newMarker);
     form.reset();
   };
 
