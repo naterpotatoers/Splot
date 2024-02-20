@@ -1,6 +1,6 @@
-import { MapCoordinate, MapMarker } from './types';
+import { MapCoordinate, MapData } from './types';
 
-export function getMapCenter(perimeter: Array<MapMarker>): MapCoordinate {
+export function getMapCenter(perimeter: Array<MapData>): MapCoordinate {
   if (perimeter.length === 0) return { lat: 0, lng: 0 };
   const lat =
     perimeter.reduce((acc, marker) => acc + marker.coords.lat, 0) /
@@ -15,20 +15,20 @@ export function getMapCenter(perimeter: Array<MapMarker>): MapCoordinate {
 }
 
 export function getPerimeterCoordinates(
-  perimeter: Array<MapMarker>,
+  perimeter: Array<MapData>,
 ): Array<MapCoordinate> {
   if (perimeter.length === 0) return [{ lat: 0, lng: 0 }];
   return perimeter.map((marker) => marker.coords);
 }
 
-export function getUniqueDeviceId(data: Array<MapMarker>): Array<string> {
+export function getUniqueDeviceId(data: Array<MapData>): Array<string> {
   // grab everything before the second hyphen
   const ids = data.map((marker) => marker.id.split('-').slice(0, 2).join('-'));
   return Array.from(new Set(ids));
 }
 
 export function groupCoordinatesById(
-  explored: Array<MapMarker>,
+  explored: Array<MapData>,
 ): Array<Array<MapCoordinate>> {
   const ids = getUniqueDeviceId(explored);
   const grouped = ids.map((id) =>

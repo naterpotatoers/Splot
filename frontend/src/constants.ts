@@ -1,6 +1,6 @@
-import { MapData, MapMarker } from './types';
+import { MapData } from './types';
 
-export const MAP_MARKERS: Array<MapMarker> = [
+export const MOCK_MAP_MARKERS: Array<MapData> = [
   {
     id: 'manually-set-marker-1',
     coords: { lat: 36.77, lng: -119.73 },
@@ -18,7 +18,7 @@ export const MAP_MARKERS: Array<MapMarker> = [
   },
 ];
 
-export const MAP_PERIMETER: Array<MapMarker> = [
+export const MOCK_MAP_PERIMETER: Array<MapData> = [
   {
     id: 'manually-set-perimeter-1',
     coords: { lat: 36.77, lng: -119.74 },
@@ -31,7 +31,7 @@ export const MAP_PERIMETER: Array<MapMarker> = [
   },
 ];
 
-export const MAP_EXPLORED: Array<MapMarker> = [
+export const MOCK_MAP_EXPLORED: Array<MapData> = [
   {
     id: 'drone-x-1',
     coords: { lat: 36.77, lng: -119.73 },
@@ -80,8 +80,8 @@ export const MAP_EXPLORED: Array<MapMarker> = [
 ];
 
 
-export const DEFAULT_MAP_DATA: MapData = {
-  markers: MAP_MARKERS,
-  perimeter: MAP_PERIMETER,
-  explored: MAP_EXPLORED,
+export const DEFAULT_MAP_DATA = {
+  markers: MOCK_MAP_MARKERS,
+  perimeter: MOCK_MAP_PERIMETER,
+  explored: MOCK_MAP_EXPLORED,
 };

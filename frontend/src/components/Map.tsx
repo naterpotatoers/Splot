@@ -1,3 +1,4 @@
+import { MapData } from '../types';
 import {
   MapContainer,
   Marker,
@@ -6,20 +7,25 @@ import {
   Rectangle,
   TileLayer,
 } from 'react-leaflet';
-import { MapData } from '../types';
 import {
   getMapCenter,
   getPerimeterCoordinates,
   groupCoordinatesById,
 } from '../utils';
 
-export default function Map({ mapData }: { mapData: MapData }) {
+type MapProps = {
+  perimeter: Array<MapData>;
+  explored: Array<MapData>;
+  markers: Array<MapData>;
+};
+
+export default function Map({ mapData }: { mapData: MapProps }) {
   const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
   const exploredCoordinates = groupCoordinatesById(mapData.explored);
 
   return (
     <MapContainer
-      style={{ height: '100%', width: '100%', minHeight: '500px' }}
+      style={{ height: '100%', width: '100%', minHeight: '400px' }}
       center={getMapCenter(mapData.perimeter)}
       zoom={12}
       scrollWheelZoom={false}

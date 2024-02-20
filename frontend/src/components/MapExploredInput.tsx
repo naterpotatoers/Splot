@@ -1,9 +1,9 @@
 import { Plus } from 'lucide-react';
 import React from 'react';
-import { MapMarker } from '../types';
+import { MapData } from '../types';
 
 type MapExploredInputProps = {
-  handleNew: (newMarker: MapMarker) => void;
+  handleNew: (newMarker: MapData) => void;
 };
 
 export default function MapExploredInput({
@@ -15,7 +15,7 @@ export default function MapExploredInput({
     const lat = parseFloat(form.lat.value);
     const lng = parseFloat(form.lng.value);
     const desc = form.desc.value;
-    const newMarker: MapMarker = {
+    const newMarker: MapData = {
       id: 'manually-explored-' + Date.now().toString(),
       coords: { lat, lng },
       desc,

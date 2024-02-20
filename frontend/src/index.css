@@ -18,9 +18,10 @@
   border: 1px solid black;
 }
 
-.grid-col-2 {
+.grid-col-autofill {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* make it auto size if screen shrinks below 800px */
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 10px;
 }
 

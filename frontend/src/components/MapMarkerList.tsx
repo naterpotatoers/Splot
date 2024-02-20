@@ -1,9 +1,9 @@
-import { MapMarker } from '../types';
+import { MapData } from '../types';
 import { Trash2 } from 'lucide-react';
 
 type MapMarkerListProps = {
-  markers: Array<MapMarker>;
-  removeMarker: (marker: MapMarker) => void;
+  markers: Array<MapData>;
+  removeMarker: (marker: MapData) => void;
 };
 
 export default function MapMarkerList({
@@ -14,7 +14,7 @@ export default function MapMarkerList({
     <>
       <h2>Map Marker List</h2>
       <div data-testid="marker-list">
-        {markers.map((marker: MapMarker) => (
+        {markers.map((marker: MapData) => (
           <div key={marker.id} className="flex-row">
             <p>{marker.id}</p>
             <p>

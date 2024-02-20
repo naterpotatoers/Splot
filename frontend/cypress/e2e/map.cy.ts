@@ -1,4 +1,4 @@
-import { EXPLORED, MARKER, PERIMETER } from "../support/elements";
+import { EXPLORED, MARKER, PERIMETER } from '../support/elements';
 
 const TEST_INPUT = {
   desc: 'test',
@@ -33,32 +33,31 @@ describe('template spec', () => {
     cy.contains(TEST_INPUT.desc).should('not.exist');
   });
 
-  it.only('should add new explored to map', () => {
-    const TEST_INPUT_1 = {
+  it('should add new explored to map', () => {
+    const INPUT_1 = {
       desc: 'manually set explored 1',
       coords: { lat: 36.71, lng: -119.71 },
     };
 
-    const TEST_INPUT_2 = {
+    const INPUT_2 = {
       desc: 'manually set explored 2',
       coords: { lat: 36.72, lng: -119.74 },
     };
 
-    cy.get(EXPLORED.INPUT.LAT).type(TEST_INPUT_1.coords.lat);
-    cy.get(EXPLORED.INPUT.LNG).type(TEST_INPUT_1.coords.lng);
-    cy.get(EXPLORED.INPUT.DESC).type(TEST_INPUT_1.desc);
+    cy.get(EXPLORED.INPUT.LAT).type(INPUT_1.coords.lat.toString());
+    cy.get(EXPLORED.INPUT.LNG).type(INPUT_1.coords.lng.toString());
+    cy.get(EXPLORED.INPUT.DESC).type(INPUT_1.desc);
     cy.get(EXPLORED.BUTTON.SUBMIT).click();
-    cy.contains(TEST_INPUT_1.desc);
+    cy.contains(INPUT_1.desc);
 
-    cy.get(EXPLORED.INPUT.LAT).type(TEST_INPUT_2.coords.lat);
-    cy.get(EXPLORED.INPUT.LNG).type(TEST_INPUT_2.coords.lng);
-    cy.get(EXPLORED.INPUT.DESC).type(TEST_INPUT_2.desc);
+    cy.get(EXPLORED.INPUT.LAT).type(INPUT_2.coords.lat.toString());
+    cy.get(EXPLORED.INPUT.LNG).type(INPUT_2.coords.lng.toString());
+    cy.get(EXPLORED.INPUT.DESC).type(INPUT_2.desc);
     cy.get(EXPLORED.BUTTON.SUBMIT).click();
-    cy.contains(TEST_INPUT_2.desc);
+    cy.contains(INPUT_2.desc);
 
-
-    cy.get(EXPLORED.INPUT.LAT).type(TEST_INPUT.coords.lat);
-    cy.get(EXPLORED.INPUT.LNG).type(TEST_INPUT.coords.lng);
+    cy.get(EXPLORED.INPUT.LAT).type(TEST_INPUT.coords.lat.toString());
+    cy.get(EXPLORED.INPUT.LNG).type(TEST_INPUT.coords.lng.toString());
     cy.get(EXPLORED.INPUT.DESC).type(TEST_INPUT.desc);
     cy.get(EXPLORED.BUTTON.SUBMIT).click();
     cy.contains(TEST_INPUT.desc);

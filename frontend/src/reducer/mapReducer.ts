@@ -1,14 +1,14 @@
-import { MapMarker } from '../types';
+import { MapData } from '../types';
 
 type MapReducerState = {
-  markers: Array<MapMarker>;
-  perimeter: Array<MapMarker>;
-  explored: Array<MapMarker>;
+  markers: Array<MapData>;
+  perimeter: Array<MapData>;
+  explored: Array<MapData>;
 };
 
 type MapReducerAction = {
   type: string;
-  payload: MapMarker;
+  payload: MapData;
 };
 
 export default function mapReducer(

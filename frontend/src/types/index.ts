@@ -3,14 +3,14 @@ export type MapCoordinate = {
   lng: number;
 };
 
-export type MapMarker = {
+export type MapData = {
   id: string;
   desc: string;
   coords: MapCoordinate;
 };
 
-export type MapData = {
-  markers: Array<MapMarker>;
-  perimeter: Array<MapMarker>;
-  explored: Array<MapMarker>;
+export type MapProps = {
+  markers: Array<MapData>;
+  perimeter: Array<MapData>;
+  explored: Array<MapData>;
 };
