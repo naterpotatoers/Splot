@@ -44,6 +44,20 @@ export default function mapReducer(
         ),
       };
     }
+    case 'explored_added': {
+      return {
+        ...state,
+        explored: [...state.explored, action.payload],
+      };
+    }
+    case 'explored_removed': {
+      return {
+        ...state,
+        explored: state.explored.filter(
+          (explored) => explored.id !== action.payload.id,
+        ),
+      };
+    }
   }
   throw Error('Unknown action: ' + action.type);
 }

@@ -10,7 +10,9 @@ import { MapData } from '../types';
 import { getMapCenter } from '../utils';
 
 export default function Map({ mapData }: { mapData: MapData }) {
-  const perimeterCoordinates = mapData.perimeter.map((marker) => marker.coords);
+  const perimeterCoordinates = mapData.perimeter.map((perimeter) => perimeter.coords);
+  const exploredCoordinates = mapData.explored.map((explored) => explored.coords);
+
 
   return (
     <MapContainer
@@ -25,18 +27,7 @@ export default function Map({ mapData }: { mapData: MapData }) {
       />
       <Polyline
         pathOptions={{ color: 'black' }}
-        positions={[
-          [
-            [36.77, -119.73],
-            [36.74, -119.72],
-            [36.71, -119.71],
-          ],
-          [
-            [36.74, -119.72],
-            [36.73, -119.73],
-            [36.72, -119.74],
-          ],
-        ]}
+        positions={exploredCoordinates}
         weight={15}
         opacity={0.5}
       >
