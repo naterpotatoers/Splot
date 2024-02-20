@@ -4,12 +4,8 @@ import { MapData } from '../types';
 
 import Map from '../components/Map';
 import mapReducer from '../reducer/mapReducer';
-import MapMarkerList from '../components/MapMarkerList';
-import MapPerimeterList from '../components/MapPerimeterList';
-import MapMarkerInput from '../components/MapMarkerInput';
-import MapPerimeterInput from '../components/MapPerimeterInput';
-import MapExploredInput from '../components/MapExploredInput';
-import MapExploredList from '../components/MapExploredList';
+import MapInput from '../components/MapInput';
+import MapList from '../components/MapList';
 
 export default function Home() {
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
@@ -44,24 +40,27 @@ export default function Home() {
       <Map mapData={mapData} />
       <div className="grid-col-autofill">
         <div id="map-marker-data">
-          <MapMarkerInput handleNew={handleAddMarker} />
-          <MapMarkerList
-            markers={mapData.markers}
-            removeMarker={handleRemoveMarker}
+          <MapInput label="Marker" create={handleAddMarker} />
+          <MapList
+            label="Marker"
+            list={mapData.markers}
+            remove={handleRemoveMarker}
           />
         </div>
         <div id="map-perimeter-data">
-          <MapPerimeterInput handleNew={handleAddPerimeter} />
-          <MapPerimeterList
-            perimeter={mapData.perimeter}
-            removePerimeter={handleRemovePerimeter}
+          <MapInput label="Perimeter" create={handleAddPerimeter} />
+          <MapList
+            label="Perimeter"
+            list={mapData.perimeter}
+            remove={handleRemovePerimeter}
           />
         </div>
-        <div>
-          <MapExploredInput handleNew={handleAddExplored} />
-          <MapExploredList
-            explored={mapData.explored}
-            removeExplored={handleRemoveExplored}
+        <div id="map-explored-data">
+          <MapInput label="Explored" create={handleAddExplored} />
+          <MapList
+            label="Explored"
+            list={mapData.explored}
+            remove={handleRemoveExplored}
           />
         </div>
       </div>

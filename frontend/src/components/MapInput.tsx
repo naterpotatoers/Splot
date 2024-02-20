@@ -2,11 +2,12 @@ import { Plus } from 'lucide-react';
 import React from 'react';
 import { MapData } from '../types';
 
-type MapMarkerInputProps = {
-  handleNew: (newMarker: MapData) => void;
+type MapInputProps = {
+  label: string;
+  create: (data: MapData) => void;
 };
 
-export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
+export default function MapInput({ label, create }: MapInputProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -14,24 +15,24 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
     const lng = parseFloat(form.lng.value);
     const desc = form.desc.value;
     const newMarker: MapData = {
-      id: 'marker-' + Date.now().toString(),
+      id: `manually-${label.toLowerCase()}-` + Date.now().toString(),
       coords: { lat, lng },
       desc,
     };
-    handleNew(newMarker);
+    create(newMarker);
     form.reset();
   };
 
   return (
     <>
-      <h3>Add Marker</h3>
-      <form className="flex-row" onSubmit={handleSubmit}>
+      <h3>Add {label}</h3>
+      <form className="grid-col-4" onSubmit={handleSubmit}>
         <div className="form-field">
           <label>Latitude</label>
           <input
             type="number"
             name="lat"
-            data-testid="marker-lat-input"
+            data-testid={`${label.toLowerCase()}-lat-input`}
             step={0.01}
             max={90}
             min={-90}
@@ -43,7 +44,7 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
           <input
             type="number"
             name="lng"
-            data-testid="marker-lng-input"
+            data-testid={`${label.toLowerCase()}-lng-input`}
             step={0.01}
             max={180}
             min={-180}
@@ -52,9 +53,17 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
         </div>
         <div className="form-field">
           <label>Description</label>
-          <input type="text" name="desc" data-testid="marker-desc-input" required />
+          <input
+            type="text"
+            name="desc"
+            data-testid={`${label.toLowerCase()}-desc-input`}
+            required
+          />
         </div>
-        <button type="submit" data-testid="marker-submit-button">
+        <button
+          type="submit"
+          data-testid={`${label.toLowerCase()}-submit-button`}
+        >
           <Plus />
         </button>
       </form>
