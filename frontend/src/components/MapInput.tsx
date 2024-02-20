@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import React from 'react';
 import { MapData } from '../types';
+import { handleMapInputSubmit } from '../utils';
 
 type MapInputProps = {
   label: string;
@@ -9,18 +10,8 @@ type MapInputProps = {
 
 export default function MapInput({ label, create }: MapInputProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const lat = parseFloat(form.lat.value);
-    const lng = parseFloat(form.lng.value);
-    const desc = form.desc.value;
-    const newMarker: MapData = {
-      id: `manually-${label.toLowerCase()}-` + Date.now().toString(),
-      coords: { lat, lng },
-      desc,
-    };
-    create(newMarker);
-    form.reset();
+    const newData = handleMapInputSubmit(e, label);
+    create(newData);
   };
 
   return (

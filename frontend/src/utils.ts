@@ -1,5 +1,20 @@
 import { MapCoordinate, MapData } from './types';
 
+export function handleMapInputSubmit(e: React.FormEvent<HTMLFormElement>, label: string): MapData {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const lat = parseFloat(form.lat.value);
+  const lng = parseFloat(form.lng.value);
+  const desc = form.desc.value;
+  const newMarker: MapData = {
+    id: `manually-${label.toLowerCase()}-` + Date.now().toString(),
+    coords: { lat, lng },
+    desc,
+  };
+  form.reset();
+  return newMarker;
+}
+
 export function getMapCenter(perimeter: Array<MapData>): MapCoordinate {
   if (perimeter.length === 0) return { lat: 0, lng: 0 };
   const lat =
