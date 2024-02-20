@@ -4,17 +4,17 @@ export const MAP_MARKERS: Array<MapMarker> = [
   {
     id: 'manually-set-marker-1',
     coords: { lat: 36.77, lng: -119.73 },
-    desc: 'First marker desc',
+    desc: '1st marker',
   },
   {
     id: 'manually-set-marker-2',
     coords: { lat: 36.74, lng: -119.72 },
-    desc: 'Second marker desc',
+    desc: '2nd marker',
   },
   {
     id: 'manually-set-marker-3',
     coords: { lat: 36.71, lng: -119.71 },
-    desc: 'Third marker desc',
+    desc: '3rd marker',
   },
 ];
 
@@ -22,60 +22,60 @@ export const MAP_PERIMETER: Array<MapMarker> = [
   {
     id: 'manually-set-perimeter-1',
     coords: { lat: 36.77, lng: -119.74 },
-    desc: 'First perimeter coordinate desc',
+    desc: '1st perimeter',
   },
   {
     id: 'manually-set-perimeter-2',
     coords: { lat: 36.71, lng: -119.71 },
-    desc: 'Second perimeter coordinate desc',
+    desc: '2nd perimeter',
   },
 ];
 
 export const MAP_EXPLORED: Array<MapMarker> = [
   {
-    id: 'explored-drone-x-1',
+    id: 'drone-x-1',
     coords: { lat: 36.77, lng: -119.73 },
-    desc: 'First explored coordinate by drone x',
+    desc: '1st explored',
   },
   {
-    id: 'explored-drone-x-2',
+    id: 'drone-x-2',
     coords: { lat: 36.74, lng: -119.72 },
-    desc: 'Second explored coordinate by drone x',
+    desc: '2nd explored',
   },
   {
-    id: 'explored-drone-x-3',
+    id: 'drone-x-3',
     coords: { lat: 36.71, lng: -119.71 },
-    desc: 'Third explored coordinate by drone x',
+    desc: '3rd explored',
   },
   {
-    id: 'explored-drone-y-1',
+    id: 'drone-y-1',
     coords: { lat: 36.74, lng: -119.72 },
-    desc: 'First explored coordinate by drone y',
+    desc: '1st explored',
   },
   {
-    id: 'explored-drone-y-2',
+    id: 'drone-y-2',
     coords: { lat: 36.73, lng:-119.73 },
-    desc: 'Second explored coordinate by drone y',
+    desc: '2nd explored',
   },
   {
-    id: 'explored-drone-y-3',
+    id: 'drone-y-3',
     coords: { lat: 36.72, lng: -119.74 },
-    desc: 'Third explored coordinate by drone y',
+    desc: '3rd explored',
   },
   {
-    id: 'explored-drone-z-1',
+    id: 'drone-z-1',
     coords: { lat: 36.77, lng: -119.73 },
-    desc: 'First explored coordinate by drone z',
+    desc: '1st explored',
   },
   {
-    id: 'explored-drone-z-2',
+    id: 'drone-z-2',
     coords: { lat: 36.74, lng: -119.72 },
-    desc: 'Second explored coordinate by drone z',
+    desc: '2nd explored',
   },
   {
-    id: 'explored-drone-z-3',
+    id: 'drone-z-3',
     coords: { lat: 36.71, lng: -119.71 },
-    desc: 'Third explored coordinate by drone z',
+    desc: '3rd explored',
   },
 ];
 

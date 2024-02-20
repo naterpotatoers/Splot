@@ -21,3 +21,15 @@ export const MARKER = {
       DELETE: '[data-testid=perimeter-delete-button]',
     },
   };
+
+  export const EXPLORED = {
+    INPUT: {
+      LAT: '[data-testid=explored-lat-input]',
+      LNG: '[data-testid=explored-lng-input]',
+      DESC: '[data-testid=explored-desc-input]',
+    },
+    BUTTON: {
+      SUBMIT: '[data-testid=explored-submit-button]',
+      DELETE: '[data-testid=explored-delete-button]',
+    },
+  }

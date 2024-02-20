@@ -16,7 +16,7 @@ export default function MapExploredInput({
     const lng = parseFloat(form.lng.value);
     const desc = form.desc.value;
     const newMarker: MapMarker = {
-      id: 'explored-' + Date.now().toString(),
+      id: 'manually-explored-' + Date.now().toString(),
       coords: { lat, lng },
       desc,
     };

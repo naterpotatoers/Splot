@@ -7,12 +7,15 @@ import {
   TileLayer,
 } from 'react-leaflet';
 import { MapData } from '../types';
-import { getMapCenter } from '../utils';
+import {
+  getMapCenter,
+  getPerimeterCoordinates,
+  groupCoordinatesById,
+} from '../utils';
 
 export default function Map({ mapData }: { mapData: MapData }) {
-  const perimeterCoordinates = mapData.perimeter.map((perimeter) => perimeter.coords);
-  const exploredCoordinates = mapData.explored.map((explored) => explored.coords);
-
+  const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
+  const exploredCoordinates = groupCoordinatesById(mapData.explored);
 
   return (
     <MapContainer
@@ -25,17 +28,16 @@ export default function Map({ mapData }: { mapData: MapData }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
       <Polyline
         pathOptions={{ color: 'black' }}
         positions={exploredCoordinates}
-        weight={15}
+        weight={10}
         opacity={0.5}
-      >
-        <Popup>Popup in Polyline</Popup>
-      </Polyline>
+      />
 
       <Rectangle
-        bounds={perimeterCoordinates.length > 0 ? perimeterCoordinates : [[0, 0], [0, 0]]}
+        bounds={perimeterCoordinates}
         color="black"
         fillOpacity={0.05}
       />
@@ -43,13 +45,19 @@ export default function Map({ mapData }: { mapData: MapData }) {
       {mapData.markers.map((marker) => (
         <Marker key={marker.id} position={marker.coords}>
           <Popup>
-            <h5>{marker.desc}</h5>
+            <h3>{marker.id}</h3>
+            <h4>Coordinates</h4>
+            <p>
+              {marker.coords.lat}, {marker.coords.lng}
+            </p>
+            <h4>Description</h4>
+            <p>{marker.desc}</p>
             <button
               onClick={() => {
-                console.log(`Hello from ${marker.id}`);
+                console.log(`${marker.id}`);
               }}
             >
-              Hello
+              Click
             </button>
           </Popup>
         </Marker>
