@@ -14,7 +14,7 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
     const lng = parseFloat(form.lng.value);
     const desc = form.desc.value;
     const newMarker: MapMarker = {
-      id: Date.now().toString(),
+      id: 'marker-' + Date.now().toString(),
       coords: { lat, lng },
       desc,
     };
@@ -31,7 +31,7 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
           <input
             type="number"
             name="lat"
-            testdata-id="lat-input"
+            data-testid="marker-lat-input"
             step={0.01}
             max={90}
             min={-90}
@@ -43,7 +43,7 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
           <input
             type="number"
             name="lng"
-            testdata-id="lng-input"
+            data-testid="marker-lng-input"
             step={0.01}
             max={180}
             min={-180}
@@ -52,9 +52,9 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
         </div>
         <div className="form-field">
           <label>Description</label>
-          <input type="text" name="desc" testdata-id="desc-input" required />
+          <input type="text" name="desc" data-testid="marker-desc-input" required />
         </div>
-        <button type="submit" testdata-id="submit-marker-input">
+        <button type="submit" data-testid="marker-submit-button">
           <Plus />
         </button>
       </form>

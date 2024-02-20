@@ -11,7 +11,7 @@ export default function MapPerimeterList({
   removePerimeter,
 }: MapPerimeterListProps) {
   return (
-    <div>
+    <>
       <h2>Map Perimeter List</h2>
       {perimeter.map((perimeter: any) => (
         <div key={perimeter.id} className="flex-row">
@@ -21,13 +21,13 @@ export default function MapPerimeterList({
           </p>
           <p>{perimeter.desc}</p>
           <button
-            id={`remove-${perimeter.id}`}
+            data-testid="perimeter-delete-button"
             onClick={() => removePerimeter(perimeter)}
           >
             <Trash2 />
           </button>
         </div>
       ))}
-    </div>
+    </>
   );
 }

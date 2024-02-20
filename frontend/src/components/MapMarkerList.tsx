@@ -11,23 +11,25 @@ export default function MapMarkerList({
   removeMarker,
 }: MapMarkerListProps) {
   return (
-    <div>
+    <>
       <h2>Map Marker List</h2>
-      {markers.map((marker: MapMarker) => (
-        <div key={marker.id} className="flex-row">
-          <p>{marker.id}</p>
-          <p>
-            {marker.coords.lat},{marker.coords.lng}
-          </p>
-          <p>{marker.desc}</p>
-          <button
-            id={`remove-${marker.id}`}
-            onClick={() => removeMarker(marker)}
-          >
-            <Trash2 />
-          </button>
-        </div>
-      ))}
-    </div>
+      <div data-testid="marker-list">
+        {markers.map((marker: MapMarker) => (
+          <div key={marker.id} className="flex-row">
+            <p>{marker.id}</p>
+            <p>
+              {marker.coords.lat},{marker.coords.lng}
+            </p>
+            <p>{marker.desc}</p>
+            <button
+              data-testid="marker-delete-button"
+              onClick={() => removeMarker(marker)}
+            >
+              <Trash2 />
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
