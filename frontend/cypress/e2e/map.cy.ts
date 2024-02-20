@@ -9,7 +9,8 @@ describe('template spec', () => {
     cy.visit('/');
     cy.contains('Splot');
 
-    cy.get(LAT_INPUT).type(marker.coords.lat);
+    // cy.contains('Add Marker', LAT_INPUT).type(marker.coords.lat);
+    cy.get('form').contains('Add Marker', LAT_INPUT).type(marker.coords.lat);
     cy.get(LNG_INPUT).type(marker.coords.lng);
     cy.get(DESC_INPUT).type(marker.desc);
     cy.get(SUBMIT_BTN).click();

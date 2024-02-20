@@ -1,13 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-li,
-ul,
-ol {
-  list-style-type: none;
 }
 
 .flex-row {
@@ -29,4 +22,10 @@ ol {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

@@ -8,3 +8,9 @@ export type MapMarker = {
   desc: string;
   coords: MapCoordinate;
 };
+
+export type MapData = {
+  markers: Array<MapMarker>;
+  perimeter: Array<MapMarker>;
+  explored: Array<MapMarker>;
+};

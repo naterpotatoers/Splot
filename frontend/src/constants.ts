@@ -1,4 +1,4 @@
-import { MapMarker } from './types';
+import { MapData, MapMarker } from './types';
 
 export const MAP_MARKERS: Array<MapMarker> = [
   {
@@ -30,3 +30,9 @@ export const MAP_PERIMETER: Array<MapMarker> = [
     desc: 'Second perimeter coordinate desc',
   },
 ];
+
+export const DEFAULT_MAP_DATA: MapData = {
+  markers: MAP_MARKERS,
+  perimeter: MAP_PERIMETER,
+  explored: [],
+};

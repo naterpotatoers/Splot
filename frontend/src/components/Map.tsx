@@ -6,20 +6,16 @@ import {
   Rectangle,
   TileLayer,
 } from 'react-leaflet';
-import { MapMarker } from '../types';
+import { MapData } from '../types';
 import { getMapCenter } from '../utils';
 
-export default function Map({
-  markers,
-  perimeter,
-}: {
-  markers: Array<MapMarker>;
-  perimeter: Array<MapMarker>;
-}) {
+export default function Map({ mapData }: { mapData: MapData }) {
+  const perimeterCoordinates = mapData.perimeter.map((marker) => marker.coords);
+
   return (
     <MapContainer
       style={{ height: '100%', width: '100%', minHeight: '500px' }}
-      center={getMapCenter(markers)}
+      center={getMapCenter(mapData.perimeter)}
       zoom={12}
       scrollWheelZoom={false}
     >
@@ -48,25 +44,12 @@ export default function Map({
       </Polyline>
 
       <Rectangle
-        bounds={[
-          [36.77, -119.74],
-          [36.71, -119.71],
-        ]}
+        bounds={perimeterCoordinates.length > 0 ? perimeterCoordinates : [[0, 0], [0, 0]]}
         color="black"
         fillOpacity={0.05}
-      >
-        <Popup>
-          <button
-            onClick={() => {
-              console.log('Hello');
-            }}
-          >
-            Hello
-          </button>
-        </Popup>
-      </Rectangle>
+      />
 
-      {markers.map((marker) => (
+      {mapData.markers.map((marker) => (
         <Marker key={marker.id} position={marker.coords}>
           <Popup>
             <h5>{marker.desc}</h5>

@@ -2,11 +2,13 @@ import { Plus } from 'lucide-react';
 import React from 'react';
 import { MapMarker } from '../types';
 
-type MapMarkerInputProps = {
+type MapPerimeterInputProps = {
   handleNew: (newMarker: MapMarker) => void;
 };
 
-export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
+export default function MapPerimeterInput({
+  handleNew,
+}: MapPerimeterInputProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -24,7 +26,7 @@ export default function MapMarkerInput({ handleNew }: MapMarkerInputProps) {
 
   return (
     <>
-      <h3>Add Marker</h3>
+      <h3>Add Perimeter</h3>
       <form className="flex-row" onSubmit={handleSubmit}>
         <div className="form-field">
           <label>Latitude</label>
