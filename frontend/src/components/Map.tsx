@@ -13,6 +13,8 @@ import {
   groupCoordinatesById,
 } from '../utils';
 
+import MarkerOnDoubleClick from './MarkerOnDoubleClick';
+
 type MapProps = {
   perimeter: Array<MapData>;
   explored: Array<MapData>;
@@ -27,8 +29,10 @@ export default function Map({ mapData }: { mapData: MapProps }) {
     <MapContainer
       style={{ height: '100%', width: '100%', minHeight: '400px' }}
       center={getMapCenter(mapData.perimeter)}
+      id="splot-map"
       zoom={12}
       scrollWheelZoom={false}
+      doubleClickZoom={false}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -47,6 +51,8 @@ export default function Map({ mapData }: { mapData: MapProps }) {
         color="black"
         fillOpacity={0.05}
       />
+
+      <MarkerOnDoubleClick />
 
       {mapData.markers.map((marker) => (
         <Marker key={marker.id} position={marker.coords}>
