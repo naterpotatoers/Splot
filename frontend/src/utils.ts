@@ -7,7 +7,7 @@ export function handleMapInputSubmit(e: React.FormEvent<HTMLFormElement>, label:
   const lng = parseFloat(form.lng.value);
   const desc = form.desc.value;
   const newMarker: MapData = {
-    id: `manually-${label.toLowerCase()}-` + Date.now().toString(),
+    id: `manually-set-${label.toLowerCase()}-` + Date.now().toString(),
     coords: { lat, lng },
     desc,
   };

@@ -1,8 +1,14 @@
 import { useReducer } from 'react';
 import { DEFAULT_MAP_DATA } from '../constants';
 import { MapData } from '../types';
+import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
+import {
+  getMapCenter,
+  getPerimeterCoordinates,
+  groupCoordinatesById,
+} from '../utils';
 
-import Map from '../components/Map';
+import MarkerOnDoubleClick from '../components/MarkerOnDoubleClick';
 import mapReducer from '../reducer/mapReducer';
 import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
@@ -34,10 +40,46 @@ export default function Home() {
     dispatch({ type: 'explored_removed', payload: explored });
   };
 
+  const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
+  const exploredCoordinates = groupCoordinatesById(mapData.explored);
+
   return (
     <div>
       <h1>Splot</h1>
-      <Map mapData={mapData} />
+      <MapContainer
+        style={{ height: '100%', width: '100%', minHeight: '400px' }}
+        center={getMapCenter(mapData.perimeter)}
+        id="splot-map"
+        zoom={12}
+        scrollWheelZoom={false}
+        doubleClickZoom={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        <Polyline
+          pathOptions={{ color: 'black' }}
+          positions={exploredCoordinates}
+          weight={10}
+          opacity={0.5}
+        />
+
+        <Rectangle
+          bounds={perimeterCoordinates}
+          color="black"
+          fillOpacity={0.05}
+        />
+
+        <MarkerOnDoubleClick
+          label="Marker"
+          mapData={mapData.markers}
+          create={handleAddMarker}
+          remove={handleRemoveMarker}
+        />
+      </MapContainer>
+
       <div className="grid-col-autofill">
         <div id="map-marker-data">
           <MapInput label="Marker" create={handleAddMarker} />
