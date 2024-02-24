@@ -59,5 +59,6 @@ export default function mapReducer(
       };
     }
   }
-  throw Error('Unknown action: ' + action.type);
+  console.error('Invalid action type');
+  return state;
 }
