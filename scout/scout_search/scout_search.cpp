@@ -9,6 +9,7 @@
 #include <mavsdk/plugins/mission/mission.h>
 #include <mavsdk/plugins/offboard/offboard.h>
 #include <mavsdk/plugins/telemetry/telemetry.h>
+#include <mavsdk/plugins/info/info.h>
 
 using namespace mavsdk;
 using std::chrono::milliseconds;
@@ -85,6 +86,7 @@ void return_to_launch(Action& action)
         // RTL failed, so exit (in reality might send kill command.)
         return;
     }
+    std::cout << "Returning to launch..." << std::endl;
 }
 
 
@@ -208,6 +210,7 @@ int main(int argc, char** argv)
 
 
     while (true) {
+        std::cout << "Drone Status: " << telemetry.landed_state() << std::endl;
         std::string command;
         std::getline(std::cin, command);
         process_movement_command(command, action, mission, telemetry, mission_items);
