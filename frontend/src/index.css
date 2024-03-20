@@ -3,10 +3,8 @@
   padding: 0;
 }
 
-.grid-col-4 {
-  display: grid;
-  grid-template-columns: 5fr 5fr 5fr 1fr;
-  gap: 10px;
+.flex {
+  display: flex;
 }
 
 .padding-10 {
@@ -17,15 +15,22 @@
   border: 1px solid black;
 }
 
-.grid-col-autofill {
+.grid-col-3 {
   display: grid;
-  /* make it auto size if screen shrinks below 800px */
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-col-4 {
+  display: grid;
+  grid-template-columns: 6fr 6fr 6fr 1fr;
 }
 
 .form-field {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.gap {
+  gap: 10px;
 }

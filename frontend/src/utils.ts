@@ -10,7 +10,7 @@ export function handleMapInputSubmit(e: React.FormEvent<HTMLFormElement>, label:
     id: `manually-set-${label.toLowerCase()}-` + Date.now().toString(),
     coords: { lat, lng },
     desc,
-  };
+};
   form.reset();
   return newMarker;
 }

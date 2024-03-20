@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-import MapInput from '../MapInput';
+
 import { MOCK_MAP_MARKERS } from '../../constants';
+
+import MapInput from '../MapInput';
 
 describe('Map Input', () => {
   it('should render input and create new entry', async () => {
