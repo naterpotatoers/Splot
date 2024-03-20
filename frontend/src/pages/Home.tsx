@@ -75,12 +75,12 @@ export default function Home() {
         <MarkerOnDoubleClick
           label="Marker"
           mapData={mapData.markers}
-          create={handleAddMarker}
-          remove={handleRemoveMarker}
+          create={handleAddPerimeter}
+          remove={handleRemovePerimeter}
         />
       </MapContainer>
 
-      <div className="grid-col-autofill">
+      <div className="grid-col-3 gap">
         <div id="map-marker-data">
           <MapInput label="Marker" create={handleAddMarker} />
           <MapList
