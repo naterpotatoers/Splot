@@ -41,3 +41,16 @@ Install python dependencies using `python3 -m pip install -r Splot/requirements.
 ## Other Notes
 By default, Ubuntu does not allow access to the Raspberry Pi's built-in RX/TX serial pins, which we use to communicate with the GPS. We followed [these instructions](https://raspberrypi.stackexchange.com/a/116860) to enable hardware serial access.
 
+# Scout
+Scout uses MAVLINK to communicate with the drone. The MAVLINK code is written in C++ and is attached to the python script that is used for the search algorithm. The C++ code is located in the MAVLINK/examples folder, but first needs to be copied and pasted into the MAVLINK/examples folder. Then run the python script in scout/demo_missions/scout_search.py and the C++ code will be executed. This script is expected to be connected to a simulation such as jmavsim, gazebo, or a real drone. (IP must be changed in the C++ script to connect to the real drone)
+
+## PX4 Simulation
+To run the PX4 simulation, follow the instructions in the [PX4 User Guide](https://docs.px4.io/master/en/simulation/ros_interface.html). The `px4` package is included as a submodule in this repository.
+
+## TODO List: 
+- Add more python functionalities for more drone control and autonomy.
+- Add IP change in python so we can easily connect to the real drone or the simulation.
+- Add offboard autonomous control when needed.
+- Add Camera functionality on drone.
+- Add CNN for object/person detection.
+- Add autonomous search and rescue algorithm.
