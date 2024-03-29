@@ -34,13 +34,13 @@ export default function mapReducer(
     case 'waypoint_added': {
       return {
         ...state,
-        waypoints: [...state.waypoint, action.payload],
+        waypoint: [...state.waypoint, action.payload],
       };
     }
     case 'waypoint_removed': {
       return {
         ...state,
-        waypoints: state.waypoint.filter(
+        waypoint: state.waypoint.filter(
           (waypoint) => waypoint.id !== action.payload.id,
         ),
       };

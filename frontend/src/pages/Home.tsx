@@ -95,6 +95,14 @@ export default function Home() {
             remove={handleRemoveMarker}
           />
         </div>
+        <div id="map-waypoint-data">
+          <MapInput label="Waypoint" create={handleAddWaypoint} />
+          <MapList
+            label="Waypoint"
+            list={mapData.waypoint}
+            remove={handleRemoveWaypoint}
+          />
+        </div>
         <div id="map-perimeter-data">
           <MapInput label="Perimeter" create={handleAddPerimeter} />
           <MapList
