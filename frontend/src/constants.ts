@@ -1,3 +1,4 @@
+import { MapReducerState } from './reducer/mapReducer';
 import { MapData } from './types';
 
 export const MOCK_MAP_MARKERS: Array<MapData> = [
@@ -79,9 +80,9 @@ export const MOCK_MAP_EXPLORED: Array<MapData> = [
   },
 ];
 
-export const DEFAULT_MAP_DATA = {
-  markers: MOCK_MAP_MARKERS,
-  waypoints: MOCK_MAP_MARKERS,
+export const DEFAULT_MAP_DATA: MapReducerState = {
+  marker: MOCK_MAP_MARKERS,
+  waypoint: MOCK_MAP_MARKERS,
   perimeter: MOCK_MAP_PERIMETER,
   explored: MOCK_MAP_EXPLORED,
 };

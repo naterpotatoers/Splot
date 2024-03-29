@@ -13,17 +13,17 @@ describe('Map Reducer', () => {
             }
         }
         const result = mapReducer(state, action)
-        expect(result.markers.length).greaterThan(DEFAULT_MAP_DATA.markers.length)
+        expect(result.marker.length).greaterThan(DEFAULT_MAP_DATA.marker.length)
     });
 
     it('should remove a marker', () => {
         const state = DEFAULT_MAP_DATA;
         const action = {
             type: 'marker_removed',
-            payload: DEFAULT_MAP_DATA.markers[0]
+            payload: DEFAULT_MAP_DATA.marker[0]
         }
         const result = mapReducer(state, action)
-        expect(result.markers.length).lessThan(DEFAULT_MAP_DATA.markers.length)
+        expect(result.marker.length).lessThan(DEFAULT_MAP_DATA.marker.length)
     });
 
     it('should add a perimeter', () => {

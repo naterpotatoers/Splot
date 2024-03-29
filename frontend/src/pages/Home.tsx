@@ -91,7 +91,7 @@ export default function Home() {
           <MapInput label="Marker" create={handleAddMarker} />
           <MapList
             label="Marker"
-            list={mapData.markers}
+            list={mapData.marker}
             remove={handleRemoveMarker}
           />
         </div>
