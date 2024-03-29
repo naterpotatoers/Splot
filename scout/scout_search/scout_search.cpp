@@ -4,6 +4,7 @@
 #include <sstream>
 #include <chrono>
 #include <cmath>
+#include <iomanip>
 #include <mavsdk/mavsdk.h>
 #include <mavsdk/plugins/action/action.h>
 #include <mavsdk/plugins/mission/mission.h>
@@ -88,6 +89,14 @@ void return_to_launch(Action& action)
     }
     std::cout << "Returning to launch..." << std::endl;
 }
+
+void get_position_info(Telemetry& telemetry)
+{
+    Telemetry::Position position_info;
+    position_info = telemetry.position();
+    std::cout << "Position: " << std::setprecision (17) << position_info.latitude_deg << ", " << position_info.longitude_deg << std::endl;
+}
+
 
 
 void add_waypoint(Mission& mission, std::vector<Mission::MissionItem>& mission_items, double latitude_deg, double longitude_deg, float relative_altitude_m)
@@ -180,10 +189,28 @@ void process_movement_command(
     }
 }
 
+
+void usage(const std::string& bin_name)
+{
+    std::cerr << "Usage : " << bin_name << " <connection_url>\n"
+              << "Connection URL format should be :\n"
+              << " For TCP : tcp://[server_host][:server_port]\n"
+              << " For UDP : udp://[bind_host][:bind_port]\n"
+              << " For Serial : serial:///path/to/serial/dev[:baudrate]\n"
+              << "For example, to connect to the simulator use URL: udp://:14540\n";
+}
+
 int main(int argc, char** argv)
 {
+
+    if (argc != 2) {
+        usage(argv[0]);
+        return 1;
+    }
+
+
     Mavsdk mavsdk{Mavsdk::Configuration{Mavsdk::ComponentType::GroundStation}};
-    ConnectionResult connection_result = mavsdk.add_any_connection("udp://:14540");
+    ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
 
     if (connection_result != ConnectionResult::Success) {
         std::cerr << "Connection failed: " << connection_result << std::endl;
@@ -208,13 +235,15 @@ int main(int argc, char** argv)
     std::cout << "System is ready" << std::endl;
     std::vector<Mission::MissionItem> mission_items;
 
-
+    get_position_info(telemetry);
     while (true) {
         std::cout << "Drone Status: " << telemetry.landed_state() << std::endl;
         std::string command;
         std::getline(std::cin, command);
         process_movement_command(command, action, mission, telemetry, mission_items);
     }
+
+    
 
     return 0;
 }

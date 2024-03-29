@@ -6,7 +6,7 @@ class RunSim:
     def __init__(self):
         # Assuming this script is run from a directory at the same level as PX4-Autopilot
         # Adjust the path to the PX4-Autopilot directory as necessary
-        self.px4_autopilot_dir = os.path.join(os.path.dirname(__file__), '..', 'PX4-Autopilot')
+        self.px4_autopilot_dir = os.path.join(os.path.dirname(__file__), '..', 'Firmware')
 
     def run(self):
         print("Running jmavsim simulation via make command")

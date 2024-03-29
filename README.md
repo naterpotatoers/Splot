@@ -44,6 +44,9 @@ By default, Ubuntu does not allow access to the Raspberry Pi's built-in RX/TX se
 # Scout
 Scout uses MAVLINK to communicate with the drone. The MAVLINK code is written in C++ and is attached to the python script that is used for the search algorithm. The C++ code is located in the MAVLINK/examples folder, but first needs to be copied and pasted into the MAVLINK/examples folder. Then run the python script in scout/demo_missions/scout_search.py and the C++ code will be executed. This script is expected to be connected to a simulation such as jmavsim, gazebo, or a real drone. (IP must be changed in the C++ script to connect to the real drone)
 
+## Dependencies
+update all submodules by running `git submodule update --init --recursive`
+
 ## PX4 Simulation
 To run the PX4 simulation, follow the instructions in the [PX4 User Guide](https://docs.px4.io/master/en/simulation/ros_interface.html). The `px4` package is included as a submodule in this repository.
 
