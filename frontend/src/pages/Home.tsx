@@ -46,18 +46,22 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Splot</h1>
-      <div>
-        <h2>{mapClickMarker}</h2>
-        <button onClick={() => setMapClickMarker('perimeter')}>
-          Set Perimeter
-        </button>
-        <button onClick={() => setMapClickMarker('marker')}>
-          Set Marker
-        </button>
-        <button onClick={() => setMapClickMarker('waypoint')}>
-          Set Waypoint
-        </button>
+      <div className="flex space-between">
+        <h1>Splot</h1>
+        <div className="flex">
+          <h2>{mapClickMarker}</h2>
+          <div>
+            <button onClick={() => setMapClickMarker('perimeter')}>
+              Set Perimeter
+            </button>
+            <button onClick={() => setMapClickMarker('marker')}>
+              Set Marker
+            </button>
+            <button onClick={() => setMapClickMarker('waypoint')}>
+              Set Waypoint
+            </button>
+          </div>
+        </div>
       </div>
       <MapContainer
         style={{ height: '100%', width: '100%', minHeight: '400px' }}

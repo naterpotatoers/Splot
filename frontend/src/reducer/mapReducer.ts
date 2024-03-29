@@ -1,6 +1,6 @@
 import { MapData } from '../types';
 
-type MapReducerState = {
+export type MapReducerState = {
   markers: Array<MapData>;
   waypoints: Array<MapData>;
   perimeter: Array<MapData>;
