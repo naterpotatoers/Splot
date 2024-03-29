@@ -16,7 +16,7 @@ export default function MapClick({ mapData, dispatch }: MapClickProps) {
         coords: e.latlng,
         desc: `Test Marker ${mapData.explored.length + 1}`,
       };
-      console.log(newMapData);
+      console.log('mapClick', newMapData);
       // add marker
     },
   });

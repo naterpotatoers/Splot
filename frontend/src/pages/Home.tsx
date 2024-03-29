@@ -1,6 +1,6 @@
 import { useReducer, useState } from 'react';
 import { DEFAULT_MAP_DATA } from '../constants';
-import { MapData } from '../types';
+import { ClickStatusOptions, MapData } from '../types';
 import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
 import {
   getMapCenter,
@@ -8,37 +8,47 @@ import {
   groupCoordinatesById,
 } from '../utils';
 
-import MarkerOnDoubleClick from '../components/MarkerOnDoubleClick';
 import mapReducer from '../reducer/mapReducer';
 import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
+import MapClick from '../components/MapClick';
+import Header from '../components/Header';
 
 export default function Home() {
-  const [mapClickMarker, setMapClickMarker] = useState('perimeter');
+  const [clickStatus, setClickStatus] =
+    useState<ClickStatusOptions>('perimeter');
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
 
-  const handleAddMarker = (marker: MapData) => {
-    dispatch({ type: 'marker_added', payload: marker });
+  const handleAddMarker = (mapData: MapData) => {
+    dispatch({ type: 'marker_added', payload: mapData });
   };
 
-  const handleRemoveMarker = (marker: MapData) => {
-    dispatch({ type: 'marker_removed', payload: marker });
+  const handleRemoveMarker = (mapData: MapData) => {
+    dispatch({ type: 'marker_removed', payload: mapData });
   };
 
-  const handleAddPerimeter = (perimeter: MapData) => {
-    dispatch({ type: 'perimeter_added', payload: perimeter });
+  const handleAddPerimeter = (mapData: MapData) => {
+    dispatch({ type: 'perimeter_added', payload: mapData });
   };
 
-  const handleRemovePerimeter = (perimeter: MapData) => {
-    dispatch({ type: 'perimeter_removed', payload: perimeter });
+  const handleRemovePerimeter = (mapData: MapData) => {
+    dispatch({ type: 'perimeter_removed', payload: mapData });
   };
 
-  const handleAddExplored = (explored: MapData) => {
-    dispatch({ type: 'explored_added', payload: explored });
+  const handleAddExplored = (mapData: MapData) => {
+    dispatch({ type: 'explored_added', payload: mapData });
   };
 
-  const handleRemoveExplored = (explored: MapData) => {
-    dispatch({ type: 'explored_removed', payload: explored });
+  const handleRemoveExplored = (mapData: MapData) => {
+    dispatch({ type: 'explored_removed', payload: mapData });
+  };
+
+  const handleAddWaypoint = (mapData: MapData) => {
+    dispatch({ type: 'waypoint_added', payload: mapData });
+  };
+
+  const handleRemoveWaypoint = (mapData: MapData) => {
+    dispatch({ type: 'waypoint_removed', payload: mapData });
   };
 
   const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
@@ -46,23 +56,7 @@ export default function Home() {
 
   return (
     <div>
-      <div className="flex space-between">
-        <h1>Splot</h1>
-        <div className="flex">
-          <h2>{mapClickMarker}</h2>
-          <div>
-            <button onClick={() => setMapClickMarker('perimeter')}>
-              Set Perimeter
-            </button>
-            <button onClick={() => setMapClickMarker('marker')}>
-              Set Marker
-            </button>
-            <button onClick={() => setMapClickMarker('waypoint')}>
-              Set Waypoint
-            </button>
-          </div>
-        </div>
-      </div>
+      <Header clickStatus={clickStatus} setClickStatus={setClickStatus} />
       <MapContainer
         style={{ height: '100%', width: '100%', minHeight: '400px' }}
         center={getMapCenter(mapData.perimeter)}
@@ -89,20 +83,7 @@ export default function Home() {
           fillOpacity={0.05}
         />
 
-        <MarkerOnDoubleClick
-          label="Marker"
-          mapData={mapData.markers}
-          create={
-            mapClickMarker === 'perimeter'
-              ? handleAddPerimeter
-              : handleAddMarker
-          }
-          remove={
-            mapClickMarker === 'perimeter'
-              ? handleRemovePerimeter
-              : handleRemoveMarker
-          }
-        />
+        <MapClick mapData={mapData} dispatch={dispatch} />
       </MapContainer>
 
       <div className="grid-col-3 gap">

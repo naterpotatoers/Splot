@@ -14,3 +14,9 @@ export type MapProps = {
   perimeter: Array<MapData>;
   explored: Array<MapData>;
 };
+
+export type ClickStatusOptions =
+  | 'perimeter'
+  | 'marker'
+  | 'explored'
+  | 'waypoint';
