@@ -2,6 +2,7 @@ import { MapData } from '../types';
 
 type MapReducerState = {
   markers: Array<MapData>;
+  waypoints: Array<MapData>;
   perimeter: Array<MapData>;
   explored: Array<MapData>;
 };
@@ -27,6 +28,20 @@ export default function mapReducer(
         ...state,
         markers: state.markers.filter(
           (marker) => marker.id !== action.payload.id,
+        ),
+      };
+    }
+    case 'waypoint_added': {
+      return {
+        ...state,
+        waypoints: [...state.waypoints, action.payload],
+      };
+    }
+    case 'waypoint_removed': {
+      return {
+        ...state,
+        waypoints: state.waypoints.filter(
+          (waypoint) => waypoint.id !== action.payload.id,
         ),
       };
     }

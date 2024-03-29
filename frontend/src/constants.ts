@@ -54,7 +54,7 @@ export const MOCK_MAP_EXPLORED: Array<MapData> = [
   },
   {
     id: 'drone-y-2',
-    coords: { lat: 36.73, lng:-119.73 },
+    coords: { lat: 36.73, lng: -119.73 },
     desc: '2nd explored',
   },
   {
@@ -79,9 +79,9 @@ export const MOCK_MAP_EXPLORED: Array<MapData> = [
   },
 ];
 
-
 export const DEFAULT_MAP_DATA = {
   markers: MOCK_MAP_MARKERS,
+  waypoints: MOCK_MAP_MARKERS,
   perimeter: MOCK_MAP_PERIMETER,
   explored: MOCK_MAP_EXPLORED,
 };

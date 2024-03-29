@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { DEFAULT_MAP_DATA } from '../constants';
 import { MapData } from '../types';
 import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
@@ -14,6 +14,7 @@ import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
 
 export default function Home() {
+  const [mapClickMarker, setMapClickMarker] = useState('perimeter');
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
 
   const handleAddMarker = (marker: MapData) => {
@@ -46,6 +47,18 @@ export default function Home() {
   return (
     <div>
       <h1>Splot</h1>
+      <div>
+        <h2>{mapClickMarker}</h2>
+        <button onClick={() => setMapClickMarker('perimeter')}>
+          Set Perimeter
+        </button>
+        <button onClick={() => setMapClickMarker('marker')}>
+          Set Marker
+        </button>
+        <button onClick={() => setMapClickMarker('waypoint')}>
+          Set Waypoint
+        </button>
+      </div>
       <MapContainer
         style={{ height: '100%', width: '100%', minHeight: '400px' }}
         center={getMapCenter(mapData.perimeter)}
@@ -75,8 +88,16 @@ export default function Home() {
         <MarkerOnDoubleClick
           label="Marker"
           mapData={mapData.markers}
-          create={handleAddPerimeter}
-          remove={handleRemovePerimeter}
+          create={
+            mapClickMarker === 'perimeter'
+              ? handleAddPerimeter
+              : handleAddMarker
+          }
+          remove={
+            mapClickMarker === 'perimeter'
+              ? handleRemovePerimeter
+              : handleRemoveMarker
+          }
         />
       </MapContainer>
 
