@@ -1,3 +1,12 @@
+export const HEADER = {
+  BUTTON: {
+    PERIMETER: '[data-testid=perimeter-button]',
+    MARKER: '[data-testid=marker-button]',
+    WAYPOINT: '[data-testid=waypoint-button]',
+  },
+  STATUS: '[data-testid=current-click-status]',
+};
+
 export const MARKER = {
   INPUT: {
     LAT: '[data-testid=marker-lat-input]',

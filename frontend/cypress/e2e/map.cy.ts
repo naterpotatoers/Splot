@@ -1,4 +1,10 @@
-import { EXPLORED, MARKER, PERIMETER, WAYPOINT } from '../support/elements';
+import {
+  EXPLORED,
+  HEADER,
+  MARKER,
+  PERIMETER,
+  WAYPOINT,
+} from '../support/elements';
 
 const GENERIC_INPUT = {
   desc: 'test',
@@ -9,6 +15,15 @@ describe('template spec', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.contains('Splot');
+  });
+
+  it('should change the click status', () => {
+    cy.get(HEADER.BUTTON.MARKER).click();
+    cy.get(HEADER.STATUS).contains('marker');
+    cy.get(HEADER.BUTTON.WAYPOINT).click();
+    cy.get(HEADER.STATUS).contains('waypoint');
+    cy.get(HEADER.BUTTON.PERIMETER).click();
+    cy.get(HEADER.STATUS).contains('perimeter');
   });
 
   it('should add new marker to map', () => {
