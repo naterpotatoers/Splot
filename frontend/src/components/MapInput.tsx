@@ -17,7 +17,7 @@ export default function MapInput({ label, create }: MapInputProps) {
   return (
     <>
       <h3>Add {label}</h3>
-      <form className="grid-col-4" onSubmit={handleSubmit}>
+      <form className="grid-col-4 gap" onSubmit={handleSubmit}>
         <div className="form-field">
           <label>Latitude</label>
           <input

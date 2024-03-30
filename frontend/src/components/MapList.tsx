@@ -12,7 +12,7 @@ export default function MapList({ label, list, remove }: MapListProps) {
     <>
       <h2>{label} List</h2>
       {list.map((data: MapData) => (
-        <div key={data.id} className="grid-col-4">
+        <div key={data.id} className="grid-col-4 gap flex">
           <p>{data.id}</p>
           <p>
             {data.coords.lat},{data.coords.lng}

@@ -1,7 +1,8 @@
 import { MapData } from '../types';
 
-type MapReducerState = {
-  markers: Array<MapData>;
+export type MapReducerState = {
+  marker: Array<MapData>;
+  waypoint: Array<MapData>;
   perimeter: Array<MapData>;
   explored: Array<MapData>;
 };
@@ -19,14 +20,28 @@ export default function mapReducer(
     case 'marker_added': {
       return {
         ...state,
-        markers: [...state.markers, action.payload],
+        marker: [...state.marker, action.payload],
       };
     }
     case 'marker_removed': {
       return {
         ...state,
-        markers: state.markers.filter(
+        marker: state.marker.filter(
           (marker) => marker.id !== action.payload.id,
+        ),
+      };
+    }
+    case 'waypoint_added': {
+      return {
+        ...state,
+        waypoint: [...state.waypoint, action.payload],
+      };
+    }
+    case 'waypoint_removed': {
+      return {
+        ...state,
+        waypoint: state.waypoint.filter(
+          (waypoint) => waypoint.id !== action.payload.id,
         ),
       };
     }
@@ -59,5 +74,5 @@ export default function mapReducer(
       };
     }
   }
-  throw Error('Unknown action: ' + action.type);
+  throw new Error('Invalid action type');
 }

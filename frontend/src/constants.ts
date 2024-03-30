@@ -1,3 +1,4 @@
+import { MapReducerState } from './reducer/mapReducer';
 import { MapData } from './types';
 
 export const MOCK_MAP_MARKERS: Array<MapData> = [
@@ -15,6 +16,14 @@ export const MOCK_MAP_MARKERS: Array<MapData> = [
     id: 'manually-set-marker-3',
     coords: { lat: 36.71, lng: -119.71 },
     desc: '3rd marker',
+  },
+];
+
+export const MOCK_MAP_WAYPOINTS: Array<MapData> = [
+  {
+    id: 'manually-set-waypoint-1',
+    coords: { lat: 36.75, lng: -119.73 },
+    desc: '1st waypoint',
   },
 ];
 
@@ -54,7 +63,7 @@ export const MOCK_MAP_EXPLORED: Array<MapData> = [
   },
   {
     id: 'drone-y-2',
-    coords: { lat: 36.73, lng:-119.73 },
+    coords: { lat: 36.73, lng: -119.73 },
     desc: '2nd explored',
   },
   {
@@ -79,9 +88,9 @@ export const MOCK_MAP_EXPLORED: Array<MapData> = [
   },
 ];
 
-
-export const DEFAULT_MAP_DATA = {
-  markers: MOCK_MAP_MARKERS,
+export const DEFAULT_MAP_DATA: MapReducerState = {
+  marker: MOCK_MAP_MARKERS,
+  waypoint: MOCK_MAP_WAYPOINTS,
   perimeter: MOCK_MAP_PERIMETER,
   explored: MOCK_MAP_EXPLORED,
 };

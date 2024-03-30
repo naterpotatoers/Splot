@@ -1,6 +1,6 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { DEFAULT_MAP_DATA } from '../constants';
-import { MapData } from '../types';
+import { ClickStatusOptions, MapData } from '../types';
 import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
 import {
   getMapCenter,
@@ -8,36 +8,48 @@ import {
   groupCoordinatesById,
 } from '../utils';
 
-import MarkerOnDoubleClick from '../components/MarkerOnDoubleClick';
 import mapReducer from '../reducer/mapReducer';
+import MapMarker from '../components/MapMarker';
 import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
+import Header from '../components/Header';
+import MapClick from '../components/MapClick';
 
 export default function Home() {
+  const [clickStatus, setClickStatus] =
+    useState<ClickStatusOptions>('perimeter');
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
 
-  const handleAddMarker = (marker: MapData) => {
-    dispatch({ type: 'marker_added', payload: marker });
+  const handleAddMarker = (mapData: MapData) => {
+    dispatch({ type: 'marker_added', payload: mapData });
   };
 
-  const handleRemoveMarker = (marker: MapData) => {
-    dispatch({ type: 'marker_removed', payload: marker });
+  const handleRemoveMarker = (mapData: MapData) => {
+    dispatch({ type: 'marker_removed', payload: mapData });
   };
 
-  const handleAddPerimeter = (perimeter: MapData) => {
-    dispatch({ type: 'perimeter_added', payload: perimeter });
+  const handleAddPerimeter = (mapData: MapData) => {
+    dispatch({ type: 'perimeter_added', payload: mapData });
   };
 
-  const handleRemovePerimeter = (perimeter: MapData) => {
-    dispatch({ type: 'perimeter_removed', payload: perimeter });
+  const handleRemovePerimeter = (mapData: MapData) => {
+    dispatch({ type: 'perimeter_removed', payload: mapData });
   };
 
-  const handleAddExplored = (explored: MapData) => {
-    dispatch({ type: 'explored_added', payload: explored });
+  const handleAddExplored = (mapData: MapData) => {
+    dispatch({ type: 'explored_added', payload: mapData });
   };
 
-  const handleRemoveExplored = (explored: MapData) => {
-    dispatch({ type: 'explored_removed', payload: explored });
+  const handleRemoveExplored = (mapData: MapData) => {
+    dispatch({ type: 'explored_removed', payload: mapData });
+  };
+
+  const handleAddWaypoint = (mapData: MapData) => {
+    dispatch({ type: 'waypoint_added', payload: mapData });
+  };
+
+  const handleRemoveWaypoint = (mapData: MapData) => {
+    dispatch({ type: 'waypoint_removed', payload: mapData });
   };
 
   const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
@@ -45,7 +57,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Splot</h1>
+      <Header clickStatus={clickStatus} setClickStatus={setClickStatus} />
       <MapContainer
         style={{ height: '100%', width: '100%', minHeight: '400px' }}
         center={getMapCenter(mapData.perimeter)}
@@ -72,21 +84,36 @@ export default function Home() {
           fillOpacity={0.05}
         />
 
-        <MarkerOnDoubleClick
+        <MapClick clickStatus={clickStatus} dispatch={dispatch} />
+
+        <MapMarker
           label="Marker"
-          mapData={mapData.markers}
-          create={handleAddMarker}
+          mapData={mapData.marker}
           remove={handleRemoveMarker}
+        />
+
+        <MapMarker
+          label="Waypoint"
+          mapData={mapData.waypoint}
+          remove={handleRemoveWaypoint}
         />
       </MapContainer>
 
-      <div className="grid-col-autofill">
+      <div className="grid-col-3 gap">
         <div id="map-marker-data">
           <MapInput label="Marker" create={handleAddMarker} />
           <MapList
             label="Marker"
-            list={mapData.markers}
+            list={mapData.marker}
             remove={handleRemoveMarker}
+          />
+        </div>
+        <div id="map-waypoint-data">
+          <MapInput label="Waypoint" create={handleAddWaypoint} />
+          <MapList
+            label="Waypoint"
+            list={mapData.waypoint}
+            remove={handleRemoveWaypoint}
           />
         </div>
         <div id="map-perimeter-data">

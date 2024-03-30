@@ -1,30 +1,14 @@
 import { Trash2 } from 'lucide-react';
 import { MapData } from '../types';
-import { Marker, Popup, useMapEvents } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 
-type MarkerOnDoubleClickProps = {
+type MapMarkerProps = {
   label: string;
   mapData: Array<MapData>;
-  create: (marker: MapData) => void;
   remove: (marker: MapData) => void;
 };
 
-export default function MarkerOnDoubleClick({
-  label,
-  mapData,
-  create,
-  remove,
-}: MarkerOnDoubleClickProps) {
-  useMapEvents({
-    dblclick(e) {
-      const newMarker = {
-        id: `manually-set-${label}-` + Date.now().toString(),
-        coords: e.latlng,
-        desc: `Test Marker ${mapData.length + 1}`,
-      };
-      create(newMarker);
-    },
-  });
+export default function MapMarker({ label, mapData, remove }: MapMarkerProps) {
   return mapData.map((marker) => (
     <Marker key={marker.id} position={marker.coords}>
       <Popup>
