@@ -9,10 +9,11 @@ import {
 } from '../utils';
 
 import mapReducer from '../reducer/mapReducer';
+import MapMarker from '../components/MapMarker';
 import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
-import MapClick from '../components/MapClick';
 import Header from '../components/Header';
+import MapClick from '../components/MapClick';
 
 export default function Home() {
   const [clickStatus, setClickStatus] =
@@ -83,7 +84,19 @@ export default function Home() {
           fillOpacity={0.05}
         />
 
-        <MapClick mapData={mapData} dispatch={dispatch} />
+        <MapClick clickStatus={clickStatus} dispatch={dispatch} />
+
+        <MapMarker
+          label="Marker"
+          mapData={mapData.marker}
+          remove={handleRemoveMarker}
+        />
+
+        <MapMarker
+          label="Waypoint"
+          mapData={mapData.waypoint}
+          remove={handleRemoveWaypoint}
+        />
       </MapContainer>
 
       <div className="grid-col-3 gap">

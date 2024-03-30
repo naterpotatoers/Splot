@@ -1,6 +1,10 @@
-import { MapCoordinate, MapData } from './types';
+import { MapReducerState } from './reducer/mapReducer';
+import { ClickStatusOptions, MapCoordinate, MapData } from './types';
 
-export function handleMapInputSubmit(e: React.FormEvent<HTMLFormElement>, label: string): MapData {
+export function handleMapInputSubmit(
+  e: React.FormEvent<HTMLFormElement>,
+  label: string,
+): MapData {
   e.preventDefault();
   const form = e.currentTarget;
   const lat = parseFloat(form.lat.value);
@@ -10,7 +14,7 @@ export function handleMapInputSubmit(e: React.FormEvent<HTMLFormElement>, label:
     id: `manually-set-${label.toLowerCase()}-` + Date.now().toString(),
     coords: { lat, lng },
     desc,
-};
+  };
   form.reset();
   return newMarker;
 }

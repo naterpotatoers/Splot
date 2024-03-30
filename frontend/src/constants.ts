@@ -19,6 +19,14 @@ export const MOCK_MAP_MARKERS: Array<MapData> = [
   },
 ];
 
+export const MOCK_MAP_WAYPOINTS: Array<MapData> = [
+  {
+    id: 'manually-set-waypoint-1',
+    coords: { lat: 36.75, lng: -119.73 },
+    desc: '1st waypoint',
+  },
+];
+
 export const MOCK_MAP_PERIMETER: Array<MapData> = [
   {
     id: 'manually-set-perimeter-1',
@@ -82,7 +90,7 @@ export const MOCK_MAP_EXPLORED: Array<MapData> = [
 
 export const DEFAULT_MAP_DATA: MapReducerState = {
   marker: MOCK_MAP_MARKERS,
-  waypoint: MOCK_MAP_MARKERS,
+  waypoint: MOCK_MAP_WAYPOINTS,
   perimeter: MOCK_MAP_PERIMETER,
   explored: MOCK_MAP_EXPLORED,
 };
