@@ -12,7 +12,7 @@ export default function MapClick({ clickStatus, dispatch }: MapClickProps) {
       const newMapData: MapData = {
         id: `manually-set-${clickStatus}-` + Date.now().toString(),
         coords: e.latlng,
-        desc: `${clickStatus} marker`,
+        desc: `${clickStatus}`,
       };
       dispatch({ type: `${clickStatus}_added`, payload: newMapData });
     },

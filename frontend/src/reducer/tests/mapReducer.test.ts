@@ -1,4 +1,4 @@
-import { DEFAULT_MAP_DATA } from "../../constants";
+import { DEFAULT_MAP_DATA } from "../../utils/constants";
 import mapReducer from "../mapReducer";
 
 describe('Map Reducer', () => { 

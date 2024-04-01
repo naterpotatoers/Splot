@@ -1,6 +1,7 @@
 import { Trash2 } from 'lucide-react';
 import { MapData } from '../types';
 import { Marker, Popup } from 'react-leaflet';
+import { InterestMarker } from '../utils/marker-icons';
 
 type MapMarkerProps = {
   label: string;
@@ -10,7 +11,7 @@ type MapMarkerProps = {
 
 export default function MapMarker({ label, mapData, remove }: MapMarkerProps) {
   return mapData.map((marker) => (
-    <Marker key={marker.id} position={marker.coords}>
+    <Marker key={marker.id} position={marker.coords} icon={InterestMarker}>
       <Popup>
         <h3>{marker.id}</h3>
         <h4>Coordinates</h4>

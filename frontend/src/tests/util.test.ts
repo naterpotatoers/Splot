@@ -1,6 +1,6 @@
 import { expect, it, describe } from 'vitest';
 
-import { MOCK_MAP_EXPLORED, MOCK_MAP_PERIMETER } from '../constants';
+import { MOCK_MAP_EXPLORED, MOCK_MAP_PERIMETER } from '../utils/constants';
 import {
   getMapCenter,
   getPerimeterCoordinates,

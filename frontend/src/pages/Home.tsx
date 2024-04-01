@@ -1,5 +1,5 @@
 import { useReducer, useState } from 'react';
-import { DEFAULT_MAP_DATA } from '../constants';
+import { DEFAULT_MAP_DATA } from '../utils/constants';
 import { ClickStatusOptions, MapData } from '../types';
 import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
 import {
@@ -87,7 +87,7 @@ export default function Home() {
         <MapClick clickStatus={clickStatus} dispatch={dispatch} />
 
         <MapMarker
-          label="Marker"
+          label="Interest"
           mapData={mapData.marker}
           remove={handleRemoveMarker}
         />
@@ -101,9 +101,9 @@ export default function Home() {
 
       <div className="grid-col-3 gap">
         <div id="map-marker-data">
-          <MapInput label="Marker" create={handleAddMarker} />
+          <MapInput label="Interest Marker" create={handleAddMarker} />
           <MapList
-            label="Marker"
+            label="Interest Marker"
             list={mapData.marker}
             remove={handleRemoveMarker}
           />

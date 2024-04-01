@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
-import { MOCK_MAP_MARKERS } from '../../constants';
+import { MOCK_MAP_MARKERS } from '../../utils/constants';
 
 import MapInput from '../MapInput';
 

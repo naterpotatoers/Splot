@@ -1,5 +1,5 @@
-import { MapReducerState } from './reducer/mapReducer';
-import { MapData } from './types';
+import { MapReducerState } from '../reducer/mapReducer';
+import { MapData } from '../types';
 
 export const MOCK_MAP_MARKERS: Array<MapData> = [
   {
