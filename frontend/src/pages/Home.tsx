@@ -1,6 +1,7 @@
 import { useReducer, useState } from 'react';
 import { DEFAULT_MAP_DATA } from '../utils/constants';
 import { ClickStatusOptions, MapData } from '../types';
+import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
 import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
 import {
   getMapCenter,
@@ -90,12 +91,14 @@ export default function Home() {
           label="Interest"
           mapData={mapData.marker}
           remove={handleRemoveMarker}
+          icon={InterestMarker}
         />
 
         <MapMarker
           label="Waypoint"
           mapData={mapData.waypoint}
           remove={handleRemoveWaypoint}
+          icon={WaypointMarker}
         />
       </MapContainer>
 
