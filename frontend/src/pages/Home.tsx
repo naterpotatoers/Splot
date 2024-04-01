@@ -1,4 +1,5 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { getExploredPositions } from '../utils/api';
 import { DEFAULT_MAP_DATA } from '../utils/constants';
 import { ClickStatusOptions, MapData } from '../types';
 import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
@@ -20,6 +21,14 @@ export default function Home() {
   const [clickStatus, setClickStatus] =
     useState<ClickStatusOptions>('perimeter');
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
+
+  useEffect(() => {
+    async function fetchExploredPositions() {
+      const explored = await getExploredPositions();
+      console.log(explored);
+    }
+    fetchExploredPositions();
+  }, []);
 
   const handleAddMarker = (mapData: MapData) => {
     dispatch({ type: 'marker_added', payload: mapData });
