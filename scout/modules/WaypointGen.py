@@ -1,86 +1,78 @@
-import time
 import math
 import random
+import time
 
 class WaypointGen():
     def __init__(self):
-        self.perimeter = []
         self.starting_gps = []
-        self.generated_waypoint = []
         self.generated_waypoints = []
 
     def get_gps(self):
         print(f"\nGPS coordinates: \nLatitude: {self.starting_gps[0]} \nLongitude: {self.starting_gps[1]}\n")
 
-
-    def add_perimeter_point(self, perimeter_point):
-        self.perimeter.append(perimeter_point)
-
-    def add_perimeter(self, perimeter):
-        self.perimeter = perimeter
-
-    def generate_search_mission(self, search_path):
-        # TODO: Need to find how to get correct boundary coordinates from Splot server
-        if search_path == "spiral":
-            print("Generating a spiral search path")
-            self.generate_spiral_path()
-        elif search_path == "grid":
-            print("Generating a grid search path")
-            self.generate_grid_path()
-        elif search_path == "random":
-            print("Generating a random search path")
-            self.generate_random_path()
-        else:
-            print("Invalid search path type")
-
-    def generate_spiral_path(self):
+    def generate_spiral_path(self, loops=5, initial_spacing=0.00003, spacing_increment=0.00003):
+        """
+        Generates a spiral path from the starting GPS point.
+        :param loops: Number of loops in the spiral.
+        :param initial_spacing: Initial distance between each waypoint in degrees.
+        :param spacing_increment: Increment added to spacing after each loop in degrees.
+        """
         x, y = self.starting_gps
-        dx, dy = 0, 1
-        spacing = 0.001  # Adjust the spacing between waypoints as needed
-        
-        # while self.is_within_perimeter(x, y):
-        for _ in range(20):
+        dx, dy = 1, 0  # Start moving east
+        current_spacing = initial_spacing
+        steps_taken = 0
+        steps_in_current_loop = 1
+        total_steps = loops * (loops + 1)  # Total steps needed for a given number of loops
+
+        while steps_taken < total_steps:
+            # Add the current point to the waypoints
             self.generated_waypoints.append((x, y))
-            if self.is_within_perimeter(x + dx * spacing, y + dy * spacing):
-                x += dx * spacing
-                y += dy * spacing
-            else:
-                dx, dy = -dy, dx
-            _ += 1
-            
-    def generate_grid_path(self):
-        x_min, y_min = self.perimeter[0]
-        x_max, y_max = self.perimeter[1]
-        spacing = 0.001  # Adjust the spacing between waypoints as needed
-        
-        x = x_min
-        while x <= x_max:
-            y = y_min
-            while y <= y_max:
-                if self.is_within_perimeter(x, y):
-                    self.generated_waypoints.append((x, y))
-                y += spacing
-            x += spacing
+            steps_taken += 1
 
-    def generate_random_path(self):
-        x_min, y_min = self.perimeter[0]
-        x_max, y_max = self.perimeter[1]
-        num_waypoints = 10  # Adjust the number of random waypoints as needed
-        
+            # Move to the next point
+            x += dx * current_spacing
+            y += dy * current_spacing
+
+            # Check if we need to turn
+            if steps_taken % steps_in_current_loop == 0:
+                # Turn right: (dx, dy) -> (dy, -dx)
+                dx, dy = dy, -dx
+
+                # After a full loop (2 turns), increase the spacing and the steps in the current loop
+                if steps_taken % (2 * steps_in_current_loop) == 0:
+                    current_spacing += spacing_increment
+                    steps_in_current_loop += 1
+
+    def generate_grid_path(self, width=5, height=5, spacing=0.0003):
+        """
+        Generates a grid path from the starting GPS point.
+        :param width: Number of points in the grid's horizontal direction.
+        :param height: Number of points in the grid's vertical direction.
+        :param spacing: Distance between grid points in degrees.
+        """
+        start_x, start_y = self.starting_gps
+        for x in range(width):
+            for y in range(height):
+                self.generated_waypoints.append((start_x + x * spacing, start_y + y * spacing))
+
+    def generate_random_path(self, num_waypoints=10, radius=0.0008):
+        """
+        Generates random waypoints within a circular area around the starting point.
+        :param num_waypoints: Number of waypoints to generate.
+        :param radius: Radius of the circle in which to generate waypoints, in degrees.
+        """
+        start_x, start_y = self.starting_gps
         for _ in range(num_waypoints):
-            x = random.uniform(x_min, x_max)
-            y = random.uniform(y_min, y_max)
-            if self.is_within_perimeter(x, y):
-                self.generated_waypoints.append((x, y))
+            angle = random.uniform(0, 2 * math.pi)
+            distance = random.uniform(0, radius)
+            x = start_x + distance * math.cos(angle)
+            y = start_y + distance * math.sin(angle)
+            self.generated_waypoints.append((x, y))
 
-    def is_within_perimeter(self, x, y):
-        # x_min, y_min = self.perimeter[0]
-        # x_max, y_max = self.perimeter[1]
-        # return x_min <= x <= x_max and y_min <= y <= y_max
-        return True
-
-    def run_search_mission(self, commander, altitude_average):
-        for i, waypoint in enumerate(self.generated_waypoints, start=1):  # 'start=0' is default and can be omitted
+    def run_search_mission(self, commander, altitude_average=10.0, speed_average=5.0, RTL=True):
+        for i, waypoint in enumerate(self.generated_waypoints, start=1):
             print(f"\nAdding waypoint #{i}: {waypoint}\n")
-            commander.add_waypoint(waypoint[0], waypoint[1], altitude_average)
-            time.sleep(1)
+            commander.add_waypoint(waypoint[0], waypoint[1], altitude_average, speed_average)
+        commander.upload_mission(RTL)
+        time.sleep(1)
+        commander.start_mission()

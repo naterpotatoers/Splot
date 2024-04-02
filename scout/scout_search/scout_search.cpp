@@ -99,14 +99,14 @@ void get_position_info(Telemetry& telemetry)
 
 
 
-void add_waypoint(Mission& mission, std::vector<Mission::MissionItem>& mission_items, double latitude_deg, double longitude_deg, float relative_altitude_m)
+void add_waypoint(Mission& mission, std::vector<Mission::MissionItem>& mission_items, double latitude_deg, double longitude_deg, float relative_altitude_m=10.0f, float speed_m_s = 5.0f)
 {
     std::cout << "Adding waypoint..." << std::endl;
     Mission::MissionItem new_waypoint = make_mission_item(
         latitude_deg,
         longitude_deg,
         relative_altitude_m,
-        5.0f,
+        speed_m_s,
         true,
         20.0f,
         60.0f,
@@ -141,13 +141,18 @@ void process_movement_command(
     std::cout << "Command: " << cmd << std::endl;
 
     if (cmd == "upload") {
+        mission.set_return_to_launch_after_mission(true);
+        upload_mission(mission, mission_items);
+
+    }else if (cmd == "upload_no_rtl") {
+        mission.set_return_to_launch_after_mission(false);
         upload_mission(mission, mission_items);
 
     }else if (cmd == "add_waypoint") {
         double latitude_deg, longitude_deg;
-        float relative_altitude_m;
-        iss >> latitude_deg >> longitude_deg >> relative_altitude_m;
-        add_waypoint(mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m);
+        float relative_altitude_m, speed_m_s;
+        iss >> latitude_deg >> longitude_deg >> relative_altitude_m >> speed_m_s;
+        add_waypoint(mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m, speed_m_s);
     }
     else if (cmd == "resume") {
         resume_mission(mission);
@@ -234,6 +239,7 @@ int main(int argc, char** argv)
 
     std::cout << "System is ready" << std::endl;
     std::vector<Mission::MissionItem> mission_items;
+    Mission::MissionProgress mission_progress;
 
     get_position_info(telemetry);
     while (true) {
@@ -241,9 +247,13 @@ int main(int argc, char** argv)
         std::string command;
         std::getline(std::cin, command);
         process_movement_command(command, action, mission, telemetry, mission_items);
-    }
 
-    
+        // if (mission_progress.current == mission_progress.total) {
+        //     std::cout << "Mission completed" << std::endl;
+        //     return_to_launch(action);
+        //     break;
+        // }
+    }
 
     return 0;
 }

@@ -51,25 +51,25 @@ threading.Thread(target=read_from_process, args=(cpp_process,waypoint_gen,), dae
 
 # Wait for the system to be ready
 print("Waiting for the system to be ready...")
-time.sleep(10)  # Adjust the delay as needed
+time.sleep(5)  # Adjust the delay as needed
 print("System is ready")
 
 
 waypoint_gen.get_gps()
-
-waypoint_gen.add_perimeter_point([47.398170327054473, 8.5456490218639658])
-waypoint_gen.add_perimeter_point([47.398058617228855, 8.5454618036746979])
+# waypoint_gen.add_perimeter_point([47.398170327054473, 8.5456490218639658])
+# waypoint_gen.add_perimeter_point([47.398058617228855, 8.5454618036746979])
 
 # Send takeoff command
 command.takeoff()
 time.sleep(10)  # Wait for takeoff to complete
 
-waypoint_gen.generate_search_mission("spiral")
+waypoint_gen.generate_spiral_path()
+# waypoint_gen.generate_grid_path()
+# waypoint_gen.generate_random_path()
 
 time.sleep(5)
-waypoint_gen.run_search_mission(command, 10.0)
-
-time.sleep(5)
+waypoint_gen.run_search_mission(command, 10.0, 2.0, RTL=True)
+time.sleep(600)
 
 # # Add waypoints
 # command.add_waypoint(47.398170327054473, 8.5456490218639658, 10.0)
@@ -95,11 +95,6 @@ time.sleep(5)
 # command.add_waypoint(47.398001890458097, 8.5455576181411743, 10.0)
 # time.sleep(1)
 
-command.upload_mission()
-time.sleep(1)
-
-command.start_mission()
-time.sleep(300)
 
 # Send return to launch command
 command.return_to_launch()

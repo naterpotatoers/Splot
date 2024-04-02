@@ -11,12 +11,15 @@ class Commander:
         self.cpp_process.stdin.write("land\n")
         self.cpp_process.stdin.flush()
 
-    def add_waypoint(self, lat, lon, alt):
-        self.cpp_process.stdin.write(f"add_waypoint {lat} {lon} {alt}\n")
+    def add_waypoint(self, lat, lon, alt, spd):
+        self.cpp_process.stdin.write(f"add_waypoint {lat} {lon} {alt} {spd}\n")
         self.cpp_process.stdin.flush()
 
-    def upload_mission(self):
-        self.cpp_process.stdin.write("upload\n")
+    def upload_mission(self, RTL=True):
+        if RTL:
+            self.cpp_process.stdin.write("upload\n")
+        else:
+            self.cpp_process.stdin.write("upload_no_rtl\n")
         self.cpp_process.stdin.flush()
 
     def start_mission(self):
