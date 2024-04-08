@@ -113,7 +113,7 @@ class TripleAxisServoControllerDriver(Node):
 
         self.get_logger().info('triple_axis_servo_controller running on serial port {} with board_id {}'.format(self._serial_port, self._tasc_board_id))
 
-    def __delete__(self):
+    def __del__(self):
         try:
             self._ser.close()
             self._ser = None
