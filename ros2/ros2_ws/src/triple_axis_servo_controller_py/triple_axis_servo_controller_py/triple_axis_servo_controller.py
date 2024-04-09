@@ -43,12 +43,41 @@ class TripleAxisServoControllerDriver(Node):
 
     def __init__(self):
         super().__init__('triple_axis_servo_controller')
-    
+
+        # ROS node parameters
+        self.declare_parameter(
+            'serial_port',
+            rclpy.Parameter.Type.STRING,
+        )
+        self.declare_parameter(
+            'servo1_potentiometer_scale',
+            3.14159 * 2 * 0.75,
+        )
+        self.declare_parameter(
+            'servo2_potentiometer_scale',
+            3.14159 * 2 * 0.75,
+        )
+        self.declare_parameter(
+            'servo3_potentiometer_scale',
+            3.14159 * 2 * 0.75,
+        )
+        self.declare_parameter(
+            'servo1_angle_offset',
+            0.0,
+        )
+        self.declare_parameter(
+            'servo2_angle_offset',
+            0.0,
+        )
+        self.declare_parameter(
+            'servo3_angle_offset',
+            0.0,
+        )
+
         self.serial_timeout = 0.1
         self.drive_command_timeout = 0.1
         self.command_timeout = 0.1
 
-        self.declare_parameter('serial_port', rclpy.Parameter.Type.STRING)
         self._serial_port = self.get_parameter('serial_port').value
         try:
             self._ser = serial.Serial(self._serial_port, 115200, timeout=self.serial_timeout)
@@ -211,11 +240,20 @@ class TripleAxisServoControllerDriver(Node):
         feedback_msg = TripleAxisServoControllerFeedback()
         feedback_msg.stamp = serial_timestamp.to_msg()
         feedback_msg.board_id = self._tasc_board_id
-        feedback_msg.servo1_pot = self._pot1
+        feedback_msg.servo1_angle = \
+            self._pot1 * \
+            self.get_parameter('servo1_potentiometer_scale').value + \
+            self.get_parameter('servo1_angle_offset').value
         feedback_msg.servo1_current = self._current1
-        feedback_msg.servo2_pot = self._pot2
+        feedback_msg.servo2_angle = \
+            self._pot2 * \
+            self.get_parameter('servo2_potentiometer_scale').value + \
+            self.get_parameter('servo2_angle_offset').value
         feedback_msg.servo2_current = self._current2
-        feedback_msg.servo3_pot = self._pot3
+        feedback_msg.servo3_angle = \
+            self._pot3 * \
+            self.get_parameter('servo3_potentiometer_scale').value + \
+            self.get_parameter('servo3_angle_offset').value
         feedback_msg.servo3_current = self._current3
         feedback_msg.servo_voltage = self._servo_voltage
 

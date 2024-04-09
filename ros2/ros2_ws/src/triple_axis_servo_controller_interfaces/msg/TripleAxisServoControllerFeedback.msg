@@ -1,9 +1,9 @@
 builtin_interfaces/Time stamp
 int32 board_id
-float32 servo1_pot
+float32 servo1_angle
 float32 servo1_current
-float32 servo2_pot
+float32 servo2_angle
 float32 servo2_current
-float32 servo3_pot
+float32 servo3_angle
 float32 servo3_current
 float32 servo_voltage
