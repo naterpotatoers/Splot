@@ -5,6 +5,8 @@ import time
 class WaypointGen():
     def __init__(self):
         self.starting_gps = []
+        self.starting_gps_set = False
+        self.current_gps = []
         self.generated_waypoints = []
 
     def get_gps(self):

@@ -94,12 +94,17 @@ void get_position_info(Telemetry& telemetry)
 {
     Telemetry::Position position_info;
     position_info = telemetry.position();
-    std::cout << "Position: " << std::setprecision (17) << position_info.latitude_deg << ", " << position_info.longitude_deg << std::endl;
+    std::cout << "Position: " << std::setprecision(17) << position_info.latitude_deg << ", "
+              << position_info.longitude_deg << std::endl;
 }
 
-
-
-void add_waypoint(Mission& mission, std::vector<Mission::MissionItem>& mission_items, double latitude_deg, double longitude_deg, float relative_altitude_m=10.0f, float speed_m_s = 5.0f)
+void add_waypoint(
+    Mission& mission,
+    std::vector<Mission::MissionItem>& mission_items,
+    double latitude_deg,
+    double longitude_deg,
+    float relative_altitude_m = 10.0f,
+    float speed_m_s = 5.0f)
 {
     std::cout << "Adding waypoint..." << std::endl;
     Mission::MissionItem new_waypoint = make_mission_item(
@@ -113,7 +118,6 @@ void add_waypoint(Mission& mission, std::vector<Mission::MissionItem>& mission_i
         Mission::MissionItem::CameraAction::None);
 
     mission_items.push_back(new_waypoint);
-
 }
 
 void resume_mission(Mission& mission)
@@ -132,8 +136,17 @@ void resume_mission(Mission& mission)
     }
 }
 
+void drone_status(Telemetry& telemetry)
+{
+    get_position_info(telemetry);
+}
+
 void process_movement_command(
-    const std::string& command, Action& action, Mission& mission, Telemetry& telemetry, std::vector<Mission::MissionItem>& mission_items)
+    const std::string& command,
+    Action& action,
+    Mission& mission,
+    Telemetry& telemetry,
+    std::vector<Mission::MissionItem>& mission_items)
 {
     std::istringstream iss(command);
     std::string cmd;
@@ -144,25 +157,26 @@ void process_movement_command(
         mission.set_return_to_launch_after_mission(true);
         upload_mission(mission, mission_items);
 
-    }else if (cmd == "upload_no_rtl") {
+    } else if (cmd == "upload_no_rtl") {
         mission.set_return_to_launch_after_mission(false);
         upload_mission(mission, mission_items);
-
-    }else if (cmd == "add_waypoint") {
+    } else if (cmd == "status") {
+        drone_status(telemetry);
+    } else if (cmd == "add_waypoint") {
         double latitude_deg, longitude_deg;
         float relative_altitude_m, speed_m_s;
         iss >> latitude_deg >> longitude_deg >> relative_altitude_m >> speed_m_s;
-        add_waypoint(mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m, speed_m_s);
-    }
-    else if (cmd == "resume") {
+        add_waypoint(
+            mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m, speed_m_s);
+    } else if (cmd == "resume") {
         resume_mission(mission);
-    }else if (cmd == "start") {
+    } else if (cmd == "start") {
         start_mission(mission);
     } else if (cmd == "pause") {
         pause_mission(mission);
-    }else if (cmd == "rtl") {
+    } else if (cmd == "rtl") {
         return_to_launch(action);
-    }else if (cmd == "takeoff") {
+    } else if (cmd == "takeoff") {
         // Arm vehicle
         std::cout << "Arming..." << std::endl;
         const Action::Result arm_result = action.arm();
@@ -194,7 +208,6 @@ void process_movement_command(
     }
 }
 
-
 void usage(const std::string& bin_name)
 {
     std::cerr << "Usage : " << bin_name << " <connection_url>\n"
@@ -207,12 +220,10 @@ void usage(const std::string& bin_name)
 
 int main(int argc, char** argv)
 {
-
     if (argc != 2) {
         usage(argv[0]);
         return 1;
     }
-
 
     Mavsdk mavsdk{Mavsdk::Configuration{Mavsdk::ComponentType::GroundStation}};
     ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
@@ -247,12 +258,6 @@ int main(int argc, char** argv)
         std::string command;
         std::getline(std::cin, command);
         process_movement_command(command, action, mission, telemetry, mission_items);
-
-        // if (mission_progress.current == mission_progress.total) {
-        //     std::cout << "Mission completed" << std::endl;
-        //     return_to_launch(action);
-        //     break;
-        // }
     }
 
     return 0;

@@ -38,5 +38,8 @@ class Commander:
         self.cpp_process.stdin.write("rtl\n")
         self.cpp_process.stdin.flush()
 
+    def get_status(self):
+        self.cpp_process.stdin.write("status\n")
+        self.cpp_process.stdin.flush()
 
 
