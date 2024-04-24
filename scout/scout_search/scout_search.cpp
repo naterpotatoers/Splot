@@ -51,6 +51,23 @@ void upload_mission(Mission& mission, std::vector<Mission::MissionItem>& mission
     }
 }
 
+void clear_mission(Mission& mission, std::vector<Mission::MissionItem>& mission_items)
+{
+    auto prom = std::make_shared<std::promise<Mission::Result>>();
+    auto future_result = prom->get_future();
+
+    std::cout << "Clearing mission..." << std::endl;
+    mission.clear_mission_async([prom](Mission::Result result) { prom->set_value(result); });
+
+    const Mission::Result result = future_result.get();
+    if (result != Mission::Result::Success) {
+        std::cout << "Failed to clear mission (" << result << ")" << std::endl;
+    } else {
+        std::cout << "Mission cleared." << std::endl;
+        mission_items.clear(); // Clear the mission_items vector
+    }
+}
+
 void start_mission(Mission& mission)
 {
     auto prom = std::make_shared<std::promise<Mission::Result>>();
@@ -136,9 +153,21 @@ void resume_mission(Mission& mission)
     }
 }
 
-void drone_status(Telemetry& telemetry)
+void drone_status(Telemetry& telemetry, Action& action, Mission& mission)
 {
     get_position_info(telemetry);
+    std::cout << "Loitering: " << telemetry.in_air() << std::endl;
+
+    std::pair<Mission::Result, bool> mission_finished = mission.is_mission_finished();
+    std::cout << "Mission Finished: " << mission_finished.second << std::endl;
+
+    if (telemetry.in_air() && mission_finished.second) {
+        std::cout << "Mission Finished... landing" << std::endl;
+        const auto land_result = action.land();
+        if (land_result != Action::Result::Success) {
+            std::cerr << "Landing failed: " << land_result << '\n';
+        }
+    }
 }
 
 void process_movement_command(
@@ -161,13 +190,15 @@ void process_movement_command(
         mission.set_return_to_launch_after_mission(false);
         upload_mission(mission, mission_items);
     } else if (cmd == "status") {
-        drone_status(telemetry);
+        drone_status(telemetry, action, mission);
     } else if (cmd == "add_waypoint") {
         double latitude_deg, longitude_deg;
         float relative_altitude_m, speed_m_s;
         iss >> latitude_deg >> longitude_deg >> relative_altitude_m >> speed_m_s;
         add_waypoint(
             mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m, speed_m_s);
+    } else if (cmd == "clear") {
+        clear_mission(mission, mission_items);
     } else if (cmd == "resume") {
         resume_mission(mission);
     } else if (cmd == "start") {
@@ -204,7 +235,7 @@ void process_movement_command(
             std::cerr << "Landing failed: " << land_result << '\n';
         }
     } else {
-        // Handle other commands if needed
+        std::cout << "Unknown command: " << cmd << std::endl;
     }
 }
 

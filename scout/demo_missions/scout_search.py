@@ -9,8 +9,6 @@ from modules.RunSim import RunSim
 from colorama import Fore, Back, Style
 from modules.WaypointGen import WaypointGen
 
-
-
 def print_cpp(line):
     print(Fore.YELLOW + "Received from C++:", Fore.BLUE, f"{line}", Style.RESET_ALL)
 
@@ -21,6 +19,7 @@ def read_from_process(process, WaypointGen):
         if not line:
             break
         print_cpp(line)
+
         if "Position" in line:
             try:
                 # Extracting GPS coordinates, stripping spaces, and converting to floats
@@ -46,8 +45,6 @@ def read_from_process(process, WaypointGen):
             process.terminate()
             process.wait()
 
-
-
 mission = BuildRunMission("scout_search")
 print("Building mission")
 mission.build()
@@ -72,8 +69,6 @@ print("System is ready")
 
 
 waypoint_gen.get_gps()
-# waypoint_gen.add_perimeter_point([47.398170327054473, 8.5456490218639658])
-# waypoint_gen.add_perimeter_point([47.398058617228855, 8.5454618036746979])
 
 # Send takeoff command
 command.takeoff()
@@ -88,35 +83,10 @@ waypoint_gen.run_search_mission(command, 10.0, 2.0, RTL=True)
 
 while True:
     command.get_status()
+    time.sleep(25)
+    break
+command.return_to_splot(47.398170327054473, 8.5456490218639658)
+
+while True:
+    command.get_status()
     time.sleep(1)
-
-# # Add waypoints
-# command.add_waypoint(47.398170327054473, 8.5456490218639658, 10.0)
-# time.sleep(1)
-
-# command.add_waypoint(47.398058617228855, 8.5454618036746979, 10.0)
-# time.sleep(1)
-
-# # Upload the mission
-# command.upload_mission()
-# time.sleep(1)
-
-# # Start the mission
-# command.start_mission()
-# time.sleep(1)
-
-# # Wait for a short duration before checking mission status
-# time.sleep(7)
-
-# command.pause_mission()
-# time.sleep(10)
-
-# command.add_waypoint(47.398001890458097, 8.5455576181411743, 10.0)
-# time.sleep(1)
-
-# Send return to launch command
-# command.return_to_launch()
-# time.sleep(60)
-
-
-# Wait for a short duration before terminating the C++ application
