@@ -42,6 +42,15 @@ app.post("/search/perimeter", (req, res) => {
   res.json(searchPerimeter);
 });
 
+app.delete("/search/perimeter/:id", (req, res) => {
+  const newSearchPerimeter = searchPerimeter.filter(
+    (perimeter) => perimeter.id !== req.params.id
+  );
+  searchPerimeter = newSearchPerimeter;
+  console.log("DELETE /search/perimeter");
+  res.send(searchPerimeter);
+});
+
 app.get("/drone/interest", (req, res) => {
   console.log("GET /drone/interest");
   res.send(droneInterestMarker);

@@ -16,6 +16,7 @@ import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
 import Header from '../components/Header';
 import MapClick from '../components/MapClick';
+// import { useQuery } from '@tanstack/react-query';
 
 export default function Home() {
   const [clickStatus, setClickStatus] =

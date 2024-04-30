@@ -12,10 +12,7 @@ type MapReducerAction = {
   payload: MapData;
 };
 
-export default function mapReducer(
-  state: MapReducerState,
-  action: MapReducerAction,
-) {
+export default function mapReducer(state: MapReducerState, action: any) {
   switch (action.type) {
     case 'marker_added': {
       return {
@@ -71,6 +68,14 @@ export default function mapReducer(
         explored: state.explored.filter(
           (explored) => explored.id !== action.payload.id,
         ),
+      };
+    }
+    case 'set_all': {
+      return {
+        explored: action.payload.explored,
+        perimeter: action.payload.perimeter,
+        waypoint: action.payload.waypoint,
+        marker: action.payload.marker,
       };
     }
   }
