@@ -4,6 +4,7 @@
 #include <sstream>
 #include <chrono>
 #include <cmath>
+#include <map>
 #include <iomanip>
 #include <mavsdk/mavsdk.h>
 #include <mavsdk/plugins/action/action.h>
@@ -16,6 +17,35 @@ using namespace mavsdk;
 using std::chrono::milliseconds;
 using std::chrono::seconds;
 using std::this_thread::sleep_for;
+
+enum Command {
+    UPLOAD,
+    UPLOAD_NO_RTL,
+    STATUS,
+    ADD_WAYPOINT,
+    CLEAR,
+    RESUME,
+    START,
+    PAUSE,
+    RTL,
+    TAKEOFF,
+    LAND,
+    UNKNOWN
+};
+
+std::map<std::string, Command> command_map = {
+    {"upload", UPLOAD},
+    {"upload_no_rtl", UPLOAD_NO_RTL},
+    {"status", STATUS},
+    {"add_waypoint", ADD_WAYPOINT},
+    {"clear", CLEAR},
+    {"resume", RESUME},
+    {"start", START},
+    {"pause", PAUSE},
+    {"rtl", RTL},
+    {"takeoff", TAKEOFF},
+    {"land", LAND}
+};
 
 Mission::MissionItem make_mission_item(
     double latitude_deg,
@@ -182,60 +212,79 @@ void process_movement_command(
     iss >> cmd;
     std::cout << "Command: " << cmd << std::endl;
 
-    if (cmd == "upload") {
-        mission.set_return_to_launch_after_mission(true);
-        upload_mission(mission, mission_items);
+    Command cmd_value = command_map.count(cmd) ? command_map[cmd] : UNKNOWN;
 
-    } else if (cmd == "upload_no_rtl") {
-        mission.set_return_to_launch_after_mission(false);
-        upload_mission(mission, mission_items);
-    } else if (cmd == "status") {
-        drone_status(telemetry, action, mission);
-    } else if (cmd == "add_waypoint") {
-        double latitude_deg, longitude_deg;
-        float relative_altitude_m, speed_m_s;
-        iss >> latitude_deg >> longitude_deg >> relative_altitude_m >> speed_m_s;
-        add_waypoint(
-            mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m, speed_m_s);
-    } else if (cmd == "clear") {
-        clear_mission(mission, mission_items);
-    } else if (cmd == "resume") {
-        resume_mission(mission);
-    } else if (cmd == "start") {
-        start_mission(mission);
-    } else if (cmd == "pause") {
-        pause_mission(mission);
-    } else if (cmd == "rtl") {
-        return_to_launch(action);
-    } else if (cmd == "takeoff") {
-        // Arm vehicle
-        std::cout << "Arming..." << std::endl;
-        const Action::Result arm_result = action.arm();
-
-        if (arm_result != Action::Result::Success) {
-            std::cout << "Arming failed:" << arm_result << std::endl;
+    switch (cmd_value) {
+        case UPLOAD: {
+            mission.set_return_to_launch_after_mission(true);
+            upload_mission(mission, mission_items);
+            break;
         }
-
-        action.set_takeoff_altitude(5.f);
-        std::cout << "Taking off..." << std::endl;
-        bool takenOff = false;
-        while (true) {
-            const Action::Result takeoff_result = action.takeoff();
-            if (takeoff_result != Action::Result::Success) {
-                std::cout << "Takeoff failed!:" << takeoff_result << std::endl;
-                std::this_thread::sleep_for(std::chrono::seconds(1));
-                continue;
+        case UPLOAD_NO_RTL: {
+            mission.set_return_to_launch_after_mission(false);
+            upload_mission(mission, mission_items);
+            break;
+        }
+        case STATUS: {
+            drone_status(telemetry, action, mission);
+            break;
+        }
+        case ADD_WAYPOINT: {
+            double latitude_deg, longitude_deg;
+            float relative_altitude_m, speed_m_s;
+            iss >> latitude_deg >> longitude_deg >> relative_altitude_m >> speed_m_s;
+            add_waypoint(mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m, speed_m_s);
+            break;
+        }
+        case CLEAR: {
+            clear_mission(mission, mission_items);
+            break;
+        }
+        case RESUME: {
+            resume_mission(mission);
+            break;
+        }
+        case START: {
+            start_mission(mission);
+            break;
+        }
+        case PAUSE: {
+            pause_mission(mission);
+            break;
+        }
+        case RTL: {
+            return_to_launch(action);
+            break;
+        }
+        case TAKEOFF: {
+            std::cout << "Arming..." << std::endl;
+            const Action::Result arm_result = action.arm();
+            if (arm_result != Action::Result::Success) {
+                std::cout << "Arming failed: " << arm_result << std::endl;
+            }
+            action.set_takeoff_altitude(5.f);
+            std::cout << "Taking off..." << std::endl;
+            while (true) {
+                const Action::Result takeoff_result = action.takeoff();
+                if (takeoff_result != Action::Result::Success) {
+                    std::cout << "Takeoff failed!: " << takeoff_result << std::endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(1));
+                    continue;
+                }
+                break;
             }
             break;
         }
-
-    } else if (cmd == "land") {
-        const auto land_result = action.land();
-        if (land_result != Action::Result::Success) {
-            std::cerr << "Landing failed: " << land_result << '\n';
+        case LAND: {
+            const Action::Result land_result = action.land();
+            if (land_result != Action::Result::Success) {
+                std::cerr << "Landing failed: " << land_result << '\n';
+            }
+            break;
         }
-    } else {
-        std::cout << "Unknown command: " << cmd << std::endl;
+        default: {
+            std::cout << "Unknown command: " << cmd << std::endl;
+        }
     }
 }
 
