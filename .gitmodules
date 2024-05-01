@@ -1,7 +1,15 @@
 [submodule "ros2/ros2_joy_ws/src/joystick_drivers"]
 	path = ros2/ros2_joy_ws/src/joystick_drivers
-	url = git@github.com:ros-drivers/joystick_drivers.git
+	url = https://github.com/ros-drivers/joystick_drivers.git
 [submodule "ros2/ros2_robot_localization_ws/src/robot_localization"]
 	path = ros2/ros2_robot_localization_ws/src/robot_localization
 	url = https://github.com/cra-ros-pkg/robot_localization
 	branch = ros2
+
+# [submodule "scout/Firmware"]
+# 	path = scout/Firmware
+# 	url = https://github.com/PX4/Firmware.git
+
+[submodule "scout/MAVSDK"]
+	path = scout/MAVSDK
+	url = https://github.com/mavlink/MAVSDK.git
