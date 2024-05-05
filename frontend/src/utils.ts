@@ -1,5 +1,4 @@
-import { MapReducerState } from './reducer/mapReducer';
-import { ClickStatusOptions, MapCoordinate, MapData } from './types';
+import { MapCoordinate, MapData } from './types';
 
 export function handleMapInputSubmit(
   e: React.FormEvent<HTMLFormElement>,

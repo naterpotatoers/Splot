@@ -9,10 +9,10 @@ export type MapReducerState = {
 
 type MapReducerAction = {
   type: string;
-  payload: MapData;
+  payload: any;
 };
 
-export default function mapReducer(state: MapReducerState, action: any) {
+export default function mapReducer(state: MapReducerState, action: MapReducerAction) {
   switch (action.type) {
     case 'marker_added': {
       return {
