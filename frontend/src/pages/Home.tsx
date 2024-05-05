@@ -26,11 +26,14 @@ export default function Home() {
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getAllMapPositions();
-      dispatch({ type: 'set_all', payload: response });
-    };
-    fetchData();
+    const interval = setInterval(() => {
+      const fetchData = async () => {
+        const response = await getAllMapPositions();
+        dispatch({ type: 'set_all', payload: response });
+      };
+      fetchData();
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleAddMarker = (mapData: MapData) => {

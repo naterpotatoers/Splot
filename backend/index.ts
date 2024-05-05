@@ -7,7 +7,7 @@ import splotWaypointRoute from "./routes/splotWaypointsRoute";
 import scoutWaypointRoute from "./routes/scoutWaypointsRoute";
 import express, { Request, Response } from "express";
 
-const port = 5000;
+const port = 8000;
 const app = express();
 const networkInterfaces = os.networkInterfaces();
 
