@@ -17,6 +17,7 @@ using namespace mavsdk;
 using std::chrono::milliseconds;
 using std::chrono::seconds;
 using std::this_thread::sleep_for;
+bool return_launch = false;
 
 enum Command {
     UPLOAD,
@@ -44,8 +45,7 @@ std::map<std::string, Command> command_map = {
     {"pause", PAUSE},
     {"rtl", RTL},
     {"takeoff", TAKEOFF},
-    {"land", LAND}
-};
+    {"land", LAND}};
 
 Mission::MissionItem make_mission_item(
     double latitude_deg,
@@ -151,7 +151,9 @@ void add_waypoint(
     double latitude_deg,
     double longitude_deg,
     float relative_altitude_m = 10.0f,
-    float speed_m_s = 5.0f)
+    float speed_m_s = 5.0f,
+    int focus = 0,
+    float yaw_deg = 0.0f)
 {
     std::cout << "Adding waypoint..." << std::endl;
     Mission::MissionItem new_waypoint = make_mission_item(
@@ -163,6 +165,13 @@ void add_waypoint(
         20.0f,
         60.0f,
         Mission::MissionItem::CameraAction::None);
+
+    std::cout << "Focus: " << focus << std::endl;
+    std::cout << "Yaw: " << yaw_deg << std::endl;
+    if (focus==1){
+        new_waypoint.yaw_deg = yaw_deg;
+        focus = 0;
+    }
 
     mission_items.push_back(new_waypoint);
 }
@@ -190,8 +199,9 @@ void drone_status(Telemetry& telemetry, Action& action, Mission& mission)
 
     std::pair<Mission::Result, bool> mission_finished = mission.is_mission_finished();
     std::cout << "Mission Finished: " << mission_finished.second << std::endl;
+    std::cout << "Mission Result: " << mission_finished.first << std::endl;
 
-    if (telemetry.in_air() && mission_finished.second) {
+    if (telemetry.in_air() && mission_finished.second && !return_launch) {
         std::cout << "Mission Finished... landing" << std::endl;
         const auto land_result = action.land();
         if (land_result != Action::Result::Success) {
@@ -218,11 +228,13 @@ void process_movement_command(
         case UPLOAD: {
             mission.set_return_to_launch_after_mission(true);
             upload_mission(mission, mission_items);
+            return_launch = true;
             break;
         }
         case UPLOAD_NO_RTL: {
             mission.set_return_to_launch_after_mission(false);
             upload_mission(mission, mission_items);
+            return_launch = false;
             break;
         }
         case STATUS: {
@@ -230,10 +242,19 @@ void process_movement_command(
             break;
         }
         case ADD_WAYPOINT: {
+            int focus;
             double latitude_deg, longitude_deg;
-            float relative_altitude_m, speed_m_s;
-            iss >> latitude_deg >> longitude_deg >> relative_altitude_m >> speed_m_s;
-            add_waypoint(mission, mission_items, latitude_deg, longitude_deg, relative_altitude_m, speed_m_s);
+            float relative_altitude_m, speed_m_s, yaw_deg;
+            iss >> latitude_deg >> longitude_deg >> relative_altitude_m >> speed_m_s >> focus >> yaw_deg;
+            add_waypoint(
+                mission,
+                mission_items,
+                latitude_deg,
+                longitude_deg,
+                relative_altitude_m,
+                speed_m_s,
+                focus,
+                yaw_deg);
             break;
         }
         case CLEAR: {
