@@ -1,6 +1,8 @@
 import { MapReducerState } from '../reducer/mapReducer';
 import { MapData } from '../types';
 
+export const BASE_URL = 'http://localhost:5000';
+
 export const MOCK_MAP_MARKERS: Array<MapData> = [
   {
     id: 'manually-set-marker-1',
@@ -89,6 +91,13 @@ export const MOCK_MAP_EXPLORED: Array<MapData> = [
 ];
 
 export const DEFAULT_MAP_DATA: MapReducerState = {
+  marker: [],
+  waypoint: [],
+  perimeter: [],
+  explored: [],
+};
+
+export const MOCK_MAP_DATA: MapReducerState = {
   marker: MOCK_MAP_MARKERS,
   waypoint: MOCK_MAP_WAYPOINTS,
   perimeter: MOCK_MAP_PERIMETER,

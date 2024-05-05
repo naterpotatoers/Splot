@@ -1,6 +1,10 @@
 import os from "os";
 import cors from "cors";
-import mapDataRoute from "./routes/mapDataRoute";
+import markerRoute from "./routes/markersRoute";
+import exploredRoute from "./routes/exploredRoute";
+import perimeterRoute from "./routes/perimeterRoute";
+import splotWaypointRoute from "./routes/splotWaypointsRoute";
+import scoutWaypointRoute from "./routes/scoutWaypointsRoute";
 import express, { Request, Response } from "express";
 
 const port = 5000;
@@ -16,15 +20,11 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Splot API");
 });
 
-app.use("/perimeter", mapDataRoute);
-
-app.use("/splot/markers", mapDataRoute);
-app.use("/splot/explored", mapDataRoute);
-app.use("/splot/interests", mapDataRoute);
-app.use("/splot/waypoints", mapDataRoute);
-
-app.use("/scout/explored", mapDataRoute);
-app.use("/scout/waypoints", mapDataRoute);
+app.use("/markers", markerRoute);
+app.use("/explored", exploredRoute);
+app.use("/perimeter", perimeterRoute);
+app.use("/splot/waypoints", splotWaypointRoute);
+app.use("/scout/waypoints", scoutWaypointRoute);
 
 app.listen(port, () => {
   console.log(`Server: http://localhost:${port}`);

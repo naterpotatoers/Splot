@@ -1,5 +1,4 @@
 import { useEffect, useReducer, useState } from 'react';
-import { getExploredPositions } from '../utils/api';
 import { DEFAULT_MAP_DATA } from '../utils/constants';
 import { ClickStatusOptions, MapData } from '../types';
 import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
@@ -9,14 +8,17 @@ import {
   getPerimeterCoordinates,
   groupCoordinatesById,
 } from '../utils';
-
+import { addScoutWaypoint, removeScoutWaypoint } from '../api/waypoint';
+import { addPerimeter, removePerimeter } from '../api/perimeter';
+import { addExplored, removeExplored } from '../api/explored';
+import { addMarker, removeMarker } from '../api/marker';
+import { getAllMapPositions } from '../utils/helper';
 import mapReducer from '../reducer/mapReducer';
 import MapMarker from '../components/MapMarker';
+import MapClick from '../components/MapClick';
 import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
 import Header from '../components/Header';
-import MapClick from '../components/MapClick';
-// import { useQuery } from '@tanstack/react-query';
 
 export default function Home() {
   const [clickStatus, setClickStatus] =
@@ -24,43 +26,51 @@ export default function Home() {
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
 
   useEffect(() => {
-    async function fetchExploredPositions() {
-      const explored = await getExploredPositions();
-      console.log(explored);
-    }
-    fetchExploredPositions();
+    const fetchData = async () => {
+      const response = await getAllMapPositions();
+      dispatch({ type: 'set_all', payload: response });
+    };
+    fetchData();
   }, []);
 
   const handleAddMarker = (mapData: MapData) => {
     dispatch({ type: 'marker_added', payload: mapData });
+    addMarker(mapData);
   };
 
   const handleRemoveMarker = (mapData: MapData) => {
     dispatch({ type: 'marker_removed', payload: mapData });
+    removeMarker(mapData);
   };
 
   const handleAddPerimeter = (mapData: MapData) => {
     dispatch({ type: 'perimeter_added', payload: mapData });
+    addPerimeter(mapData);
   };
 
   const handleRemovePerimeter = (mapData: MapData) => {
     dispatch({ type: 'perimeter_removed', payload: mapData });
+    removePerimeter(mapData);
   };
 
   const handleAddExplored = (mapData: MapData) => {
     dispatch({ type: 'explored_added', payload: mapData });
+    addExplored(mapData);
   };
 
   const handleRemoveExplored = (mapData: MapData) => {
     dispatch({ type: 'explored_removed', payload: mapData });
+    removeExplored(mapData);
   };
 
   const handleAddWaypoint = (mapData: MapData) => {
     dispatch({ type: 'waypoint_added', payload: mapData });
+    addScoutWaypoint(mapData);
   };
 
   const handleRemoveWaypoint = (mapData: MapData) => {
     dispatch({ type: 'waypoint_removed', payload: mapData });
+    removeScoutWaypoint(mapData);
   };
 
   const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
@@ -73,7 +83,7 @@ export default function Home() {
         style={{ height: '100%', width: '100%', minHeight: '400px' }}
         center={getMapCenter(mapData.perimeter)}
         id="splot-map"
-        zoom={12}
+        zoom={7}
         scrollWheelZoom={false}
         doubleClickZoom={false}
       >
