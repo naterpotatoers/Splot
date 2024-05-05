@@ -8,17 +8,21 @@ import {
   getPerimeterCoordinates,
   groupCoordinatesById,
 } from '../utils';
-
+import { addScoutWaypoint, removeScoutWaypoint } from '../api/waypoint';
+import { addPerimeter, removePerimeter } from '../api/perimeter';
+import { addExplored, removeExplored } from '../api/explored';
+import { addMarker, removeMarker } from '../api/marker';
+import { getAllMapPositions } from '../utils/helper';
 import mapReducer from '../reducer/mapReducer';
 import MapMarker from '../components/MapMarker';
+import MapClick from '../components/MapClick';
 import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
 import Header from '../components/Header';
-import MapClick from '../components/MapClick';
-import { getAllMapPositions } from '../utils/api';
 
 export default function Home() {
-  const [clickStatus, setClickStatus] = useState<ClickStatusOptions>('perimeter');
+  const [clickStatus, setClickStatus] =
+    useState<ClickStatusOptions>('perimeter');
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
 
   useEffect(() => {
@@ -31,34 +35,42 @@ export default function Home() {
 
   const handleAddMarker = (mapData: MapData) => {
     dispatch({ type: 'marker_added', payload: mapData });
+    addMarker(mapData);
   };
 
   const handleRemoveMarker = (mapData: MapData) => {
     dispatch({ type: 'marker_removed', payload: mapData });
+    removeMarker(mapData);
   };
 
   const handleAddPerimeter = (mapData: MapData) => {
     dispatch({ type: 'perimeter_added', payload: mapData });
+    addPerimeter(mapData);
   };
 
   const handleRemovePerimeter = (mapData: MapData) => {
     dispatch({ type: 'perimeter_removed', payload: mapData });
+    removePerimeter(mapData);
   };
 
   const handleAddExplored = (mapData: MapData) => {
     dispatch({ type: 'explored_added', payload: mapData });
+    addExplored(mapData);
   };
 
   const handleRemoveExplored = (mapData: MapData) => {
     dispatch({ type: 'explored_removed', payload: mapData });
+    removeExplored(mapData);
   };
 
   const handleAddWaypoint = (mapData: MapData) => {
     dispatch({ type: 'waypoint_added', payload: mapData });
+    addScoutWaypoint(mapData);
   };
 
   const handleRemoveWaypoint = (mapData: MapData) => {
     dispatch({ type: 'waypoint_removed', payload: mapData });
+    removeScoutWaypoint(mapData);
   };
 
   const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
