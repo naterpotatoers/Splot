@@ -82,7 +82,7 @@ class WaypointGen():
     def run_search_mission(self, commander, altitude_average=10.0, speed_average=5.0, RTL=True):
         for i, waypoint in enumerate(self.generated_waypoints, start=1):
             print(f"\nAdding waypoint #{i}: {waypoint}\n")
-            commander.add_waypoint(waypoint[0], waypoint[1], altitude_average, speed_average)
+            commander.add_waypoint(waypoint[0], waypoint[1], altitude_average, speed_average, focus=False)
         commander.upload_mission(RTL=RTL)
         time.sleep(1)
         commander.start_mission()
