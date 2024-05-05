@@ -1,13 +1,7 @@
 import os from "os";
 import cors from "cors";
-import express from "express";
-import { MapData } from "./types";
-import {
-  MOCK_MAP_MARKERS,
-  MOCK_MAP_PERIMETER,
-  MOCK_MAP_WAYPOINTS,
-} from "./utils/constants";
-import basicMapDataRoute from "./routes/basicMapDataRoute";
+import mapDataRoute from "./routes/mapDataRoute";
+import express, { Request, Response } from "express";
 
 const port = 5000;
 const app = express();
@@ -17,14 +11,20 @@ app.use(cors());
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
+  console.log("GET", req.baseUrl);
   res.send("Splot API");
 });
 
-app.use("/explored", basicMapDataRoute);
-app.use("/waypoints", basicMapDataRoute);
-app.use("/search", basicMapDataRoute);
-app.use("/interest", basicMapDataRoute);
+app.use("/perimeter", mapDataRoute);
+
+app.use("/splot/markers", mapDataRoute);
+app.use("/splot/explored", mapDataRoute);
+app.use("/splot/interests", mapDataRoute);
+app.use("/splot/waypoints", mapDataRoute);
+
+app.use("/scout/explored", mapDataRoute);
+app.use("/scout/waypoints", mapDataRoute);
 
 app.listen(port, () => {
   console.log(`Server: http://localhost:${port}`);
