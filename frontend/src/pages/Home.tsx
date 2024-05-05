@@ -83,7 +83,7 @@ export default function Home() {
         style={{ height: '100%', width: '100%', minHeight: '400px' }}
         center={getMapCenter(mapData.perimeter)}
         id="splot-map"
-        zoom={12}
+        zoom={7}
         scrollWheelZoom={false}
         doubleClickZoom={false}
       >
