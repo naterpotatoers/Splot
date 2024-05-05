@@ -1,10 +1,9 @@
 import os from "os";
 import cors from "cors";
 import markerRoute from "./routes/markersRoute";
+import exploredRoute from "./routes/exploredRoute";
 import perimeterRoute from "./routes/perimeterRoute";
-import splotExploredRoute from "./routes/splotExploredRoute";
 import splotWaypointRoute from "./routes/splotWaypointsRoute";
-import scoutExploredRoute from "./routes/scoutExploredRoute";
 import scoutWaypointRoute from "./routes/scoutWaypointsRoute";
 import express, { Request, Response } from "express";
 
@@ -22,10 +21,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/markers", markerRoute);
+app.use("/explored", exploredRoute);
 app.use("/perimeter", perimeterRoute);
-app.use("/splot/explored", splotExploredRoute);
 app.use("/splot/waypoints", splotWaypointRoute);
-app.use("/scout/explored", scoutExploredRoute);
 app.use("/scout/waypoints", scoutWaypointRoute);
 
 app.listen(port, () => {

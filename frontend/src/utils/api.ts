@@ -1,32 +1,37 @@
-import axios from 'axios';
+import { addExplored, getExplored } from '../api/explored';
+import { addMarker, getMarkers } from '../api/marker';
+import { addPerimeter, getPerimeters } from '../api/perimeter';
+import { addSplotWaypoint, getScoutWaypoints } from '../api/waypoint';
 import { MapReducerState } from '../reducer/mapReducer';
-import { MapData } from '../types';
+import { ClickStatusOptions, MapData } from '../types';
 
-export async function getExploredPositions(): Promise<MapData[]> {
-  const response = await axios.get('http://localhost:5000/splot/explored');
-  return response.data;
-}
-
-export async function getPerimeterPositions(): Promise<MapData[]> {
-  const response = await axios.get('http://localhost:5000/splot/perimeter');
-  return response.data;
-}
-
-export async function getWaypointPositions(): Promise<MapData[]> {
-  const response = await axios.get('http://localhost:5000/splot/waypoint');
-  return response.data;
-}
-
-export async function getMarkerPositions(): Promise<MapData[]> {
-  const response = await axios.get('http://localhost:5000/splot/marker');
-  return response.data;
+export async function addMapData(
+  clickStatus: ClickStatusOptions,
+  mapData: MapData,
+) {
+  switch (clickStatus) {
+    case 'perimeter':
+      await addPerimeter(mapData);
+      break;
+    case 'marker':
+      await addMarker(mapData);
+      break;
+    case 'explored':
+      await addExplored(mapData);
+      break;
+    case 'waypoint':
+      await addSplotWaypoint(mapData);
+      break;
+    default:
+      break;
+  }
 }
 
 export async function getAllMapPositions(): Promise<MapReducerState> {
-  const explored = await getExploredPositions();
-  const perimeter = await getPerimeterPositions();
-  const waypoint = await getWaypointPositions();
-  const marker = await getMarkerPositions();
+  const explored = await getExplored();
+  const perimeter = await getPerimeters();
+  const waypoint = await getScoutWaypoints();
+  const marker = await getMarkers();
   return {
     explored,
     perimeter,

@@ -1,5 +1,4 @@
 import { useEffect, useReducer, useState } from 'react';
-import { getExploredPositions } from '../utils/api';
 import { DEFAULT_MAP_DATA } from '../utils/constants';
 import { ClickStatusOptions, MapData } from '../types';
 import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
@@ -16,19 +15,18 @@ import MapInput from '../components/MapInput';
 import MapList from '../components/MapList';
 import Header from '../components/Header';
 import MapClick from '../components/MapClick';
-// import { useQuery } from '@tanstack/react-query';
+import { getAllMapPositions } from '../utils/api';
 
 export default function Home() {
-  const [clickStatus, setClickStatus] =
-    useState<ClickStatusOptions>('perimeter');
+  const [clickStatus, setClickStatus] = useState<ClickStatusOptions>('perimeter');
   const [mapData, dispatch] = useReducer(mapReducer, DEFAULT_MAP_DATA);
 
   useEffect(() => {
-    async function fetchExploredPositions() {
-      const explored = await getExploredPositions();
-      console.log(explored);
-    }
-    fetchExploredPositions();
+    const fetchData = async () => {
+      const response = await getAllMapPositions();
+      dispatch({ type: 'set_all', payload: response });
+    };
+    fetchData();
   }, []);
 
   const handleAddMarker = (mapData: MapData) => {
