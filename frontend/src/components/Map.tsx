@@ -1,15 +1,16 @@
-import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
-import MapClick from './MapClick';
 import MapMarker from './MapMarker';
-import { MapReducerState } from '../reducer/mapReducer';
-import { ClickStatus, MapData } from '../types';
-import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
-import { removeScoutWaypoint } from '../api/waypoint';
+import MapClickEvent from './MapClickEvent';
 import { removeMarker } from '../api/marker';
+import { ClickStatus, MapData } from '../types';
+import { removeScoutWaypoint } from '../api/waypoint';
+import { MapReducerState } from '../reducer/mapReducer';
+import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
+import { getPerimeterCoordinates, groupCoordinatesById } from '../utils';
+import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
 
 type MapProps = {
-  clickStatus: ClickStatus;
   dispatch: any;
+  clickStatus: ClickStatus;
   mapData: MapReducerState;
 };
 
@@ -25,17 +26,12 @@ export default function Map({ clickStatus, dispatch, mapData }: MapProps) {
   };
 
   const mapCenter = { lat: 0, lng: 0 };
-  const perimeterCoordinates = [
-    [0, 0],
-    [0, 0],
-  ];
-  const exploredCoordinates = [
-    [0, 0],
-    [0, 0],
-  ];
+  const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
+  const exploredCoordinates = groupCoordinatesById(mapData.explored);
+
   return (
     <MapContainer
-      style={{ height: '100%', width: '100%', minHeight: '400px' }}
+      style={{ minHeight: '80vh' }}
       center={mapCenter}
       id="splot-map"
       zoom={7}
@@ -60,7 +56,7 @@ export default function Map({ clickStatus, dispatch, mapData }: MapProps) {
         fillOpacity={0.05}
       />
 
-      <MapClick clickStatus={clickStatus} dispatch={dispatch} />
+      <MapClickEvent clickStatus={clickStatus} dispatch={dispatch} />
 
       <MapMarker
         label="Interest"

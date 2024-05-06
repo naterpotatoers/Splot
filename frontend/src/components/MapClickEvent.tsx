@@ -7,7 +7,7 @@ type MapClickProps = {
   dispatch: any;
 };
 
-export default function MapClick({ clickStatus, dispatch }: MapClickProps) {
+export default function MapClickEvent({ clickStatus, dispatch }: MapClickProps) {
   useMapEvents({
     async dblclick(e) {
       const newMapData: MapData = {
@@ -19,5 +19,5 @@ export default function MapClick({ clickStatus, dispatch }: MapClickProps) {
       addMapData(clickStatus, newMapData);
     },
   });
-  return <></>;
+  return null;
 }
