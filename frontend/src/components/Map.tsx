@@ -1,45 +1,54 @@
-import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
-import MapClick from './MapClick';
 import MapMarker from './MapMarker';
-import { MapReducerState } from '../reducer/mapReducer';
-import { ClickStatus, MapData } from '../types';
-import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
-import { removeScoutWaypoint } from '../api/waypoint';
+import MapEvents from './MapEvents';
 import { removeMarker } from '../api/marker';
+import { ClickStatus, MapData } from '../types';
+import { removeScoutWaypoint } from '../api/waypoint';
+import { MapReducerState } from '../reducer/mapReducer';
+import { InterestMarker, WaypointMarker } from '../utils/marker-icons';
+import {
+  getMapCenter,
+  getPerimeterCoordinates,
+  groupCoordinatesById,
+} from '../utils';
+import { MapContainer, Polyline, Rectangle, TileLayer } from 'react-leaflet';
+import { useCallback, useState } from 'react';
 
 type MapProps = {
-  clickStatus: ClickStatus;
   dispatch: any;
+  clickStatus: ClickStatus;
   mapData: MapReducerState;
 };
 
 export default function Map({ clickStatus, dispatch, mapData }: MapProps) {
+  const [map, setMap] = useState(null);
   const handleRemoveMarker = (mapData: MapData) => {
     dispatch({ type: 'marker_removed', payload: mapData });
     removeMarker(mapData);
   };
+
+  const handleMapFlyTo = useCallback(() => {
+    if (map) {
+      (map as any).flyTo(getMapCenter(mapData.perimeter), 7);
+    }
+  }, [map, mapData.perimeter]);
+  handleMapFlyTo();
 
   const handleRemoveWaypoint = (mapData: MapData) => {
     dispatch({ type: 'waypoint_removed', payload: mapData });
     removeScoutWaypoint(mapData);
   };
 
-  const mapCenter = { lat: 0, lng: 0 };
-  const perimeterCoordinates = [
-    [0, 0],
-    [0, 0],
-  ];
-  const exploredCoordinates = [
-    [0, 0],
-    [0, 0],
-  ];
+  const mapCenter = getMapCenter(mapData.perimeter);
+  const perimeterCoordinates = getPerimeterCoordinates(mapData.perimeter);
+  const exploredCoordinates = groupCoordinatesById(mapData.explored);
+
   return (
     <MapContainer
-      style={{ height: '100%', width: '100%', minHeight: '400px' }}
+      style={{ minHeight: '80vh' }}
       center={mapCenter}
+      ref={setMap}
       id="splot-map"
       zoom={7}
-      scrollWheelZoom={false}
       doubleClickZoom={false}
     >
       <TileLayer
@@ -60,7 +69,7 @@ export default function Map({ clickStatus, dispatch, mapData }: MapProps) {
         fillOpacity={0.05}
       />
 
-      <MapClick clickStatus={clickStatus} dispatch={dispatch} />
+      <MapEvents clickStatus={clickStatus} dispatch={dispatch} />
 
       <MapMarker
         label="Interest"

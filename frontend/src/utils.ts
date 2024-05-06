@@ -19,7 +19,8 @@ export function handleMapInputSubmit(
 }
 
 export function getMapCenter(perimeter: Array<MapData>): MapCoordinate {
-  if (perimeter.length === 0) return { lat: 0, lng: 0 };
+  if (perimeter.length === 0)
+    return { lat: 37.5, lng: -121 };
   const lat =
     perimeter.reduce((acc, marker) => acc + marker.coords.lat, 0) /
     perimeter.length;
