@@ -1,9 +1,9 @@
-import { ClickStatusOptions, MapData } from '../types';
+import { ClickStatus, MapData } from '../types';
 import { useMapEvents } from 'react-leaflet';
 import { addMapData } from '../utils/helper';
 
 type MapClickProps = {
-  clickStatus: ClickStatusOptions;
+  clickStatus: ClickStatus;
   dispatch: any;
 };
 

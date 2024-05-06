@@ -3,10 +3,10 @@ import { addMarker, getMarkers } from '../api/marker';
 import { addPerimeter, getPerimeters } from '../api/perimeter';
 import { addSplotWaypoint, getScoutWaypoints } from '../api/waypoint';
 import { MapReducerState } from '../reducer/mapReducer';
-import { ClickStatusOptions, MapData } from '../types';
+import { ClickStatus, MapData } from '../types';
 
 export async function addMapData(
-  clickStatus: ClickStatusOptions,
+  clickStatus: ClickStatus,
   mapData: MapData,
 ) {
   switch (clickStatus) {

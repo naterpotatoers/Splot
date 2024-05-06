@@ -1,8 +1,8 @@
-import { ClickStatusOptions } from '../types';
+import { ClickStatus } from '../types';
 
 type HeaderProps = {
-  clickStatus: ClickStatusOptions;
-  setClickStatus: (status: ClickStatusOptions) => void;
+  clickStatus: ClickStatus;
+  setClickStatus: (status: ClickStatus) => void;
 };
 
 export default function Header({ clickStatus, setClickStatus }: HeaderProps) {

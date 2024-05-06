@@ -15,7 +15,7 @@ export type MapProps = {
   explored: Array<MapData>;
 };
 
-export type ClickStatusOptions =
+export type ClickStatus =
   | 'perimeter'
   | 'marker'
   | 'explored'
