@@ -17,7 +17,7 @@ export default function Home() {
     queryFn: getAllMapPositions,
     refetchInterval: 1500,
   });
-
+// 37.57941251343841, -122.54150390625001
   useEffect(() => {
     if (data) {
       dispatch({ type: 'set_all', payload: data });
