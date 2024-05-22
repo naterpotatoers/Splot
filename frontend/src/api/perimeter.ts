@@ -14,10 +14,14 @@ export async function addPerimeter(mapData: MapData): Promise<MapData> {
   return response.data;
 }
 
-export async function removePerimeter(
-  mapData: MapData,
-): Promise<MapData> {
+export async function removePerimeter(mapData: MapData): Promise<MapData> {
   const url = `${BASE_URL}/perimeter/${mapData.id}`;
   const response = await axios.delete(url, { data: mapData });
+  return response.data;
+}
+
+export async function removeAllPerimeter(): Promise<MapData> {
+  const url = `${BASE_URL}/perimeter`;
+  const response = await axios.delete(url);
   return response.data;
 }

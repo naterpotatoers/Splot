@@ -19,3 +19,9 @@ export async function removeExplored(mapData: MapData): Promise<MapData> {
   const response = await axios.delete(url, { data: mapData });
   return response.data;
 }
+
+export async function removeAllExplored(): Promise<MapData> {
+  const url = `${BASE_URL}/explored`;
+  const response = await axios.delete(url);
+  return response.data;
+}
