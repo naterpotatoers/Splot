@@ -1,3 +1,4 @@
+import { removeAllMarkers } from '../api/marker';
 import { ClickStatus } from '../types';
 
 type HeaderProps = {
@@ -18,9 +19,16 @@ export default function Header({ clickStatus, setClickStatus }: HeaderProps) {
     setClickStatus('waypoint');
   };
 
+  const handleResetClick = async () => {
+    // First confirm the deletion since it might have been an accident
+    const response = await removeAllMarkers();
+    console.log(response);
+  }
+
   return (
     <div className="flex space-between padding-10">
       <h1>Splot</h1>
+      <button data-testid="reset-button" onClick={handleResetClick}>Reset</button>
       <div className="flex">
         <h2 data-testid="current-click-status">{clickStatus}</h2>
         <div>
