@@ -31,7 +31,7 @@ mapDataRoute.delete("/:id", (req: Request, res: Response) => {
 });
 
 mapDataRoute.delete("/", (req: Request, res: Response) => {
-  console.log("DELETE MARKERS", req.baseUrl);
+  console.log("DELETE", req.baseUrl);
   mapData = [];
   res.json(mapData);
 });

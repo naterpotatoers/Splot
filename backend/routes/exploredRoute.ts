@@ -30,4 +30,10 @@ mapDataRoute.delete("/:id", (req: Request, res: Response) => {
   res.send(mapData);
 });
 
+mapDataRoute.delete("/", (req: Request, res: Response) => {
+  console.log("DELETE", req.baseUrl);
+  mapData = [];
+  res.json(mapData);
+});
+
 export default mapDataRoute;
