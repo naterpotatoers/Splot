@@ -21,8 +21,8 @@ export default function Header({ clickStatus, setClickStatus }: HeaderProps) {
 
   const handleResetClick = async () => {
     // First confirm the deletion since it might have been an accident
-    const response = await removeAllMarkers();
-    console.log(response);
+  await removeAllMarkers();
+
   }
 
   return (
