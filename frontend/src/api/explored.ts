@@ -8,19 +8,19 @@ export async function getExplored(): Promise<MapData[]> {
   return response.data;
 }
 
-export async function addExplored(mapData: MapData): Promise<MapData> {
+export async function addExplored(mapData: MapData): Promise<MapData[]> {
   const url = `${BASE_URL}/explored`;
   const response = await axios.post(url, mapData);
   return response.data;
 }
 
-export async function removeExplored(mapData: MapData): Promise<MapData> {
+export async function removeExplored(mapData: MapData): Promise<MapData[]> {
   const url = `${BASE_URL}/explored/${mapData.id}`;
   const response = await axios.delete(url, { data: mapData });
   return response.data;
 }
 
-export async function removeAllExplored(): Promise<MapData> {
+export async function removeAllExplored(): Promise<MapData[]> {
   const url = `${BASE_URL}/explored`;
   const response = await axios.delete(url);
   return response.data;
