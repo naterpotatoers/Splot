@@ -19,3 +19,9 @@ export async function removeMarker(mapData: MapData): Promise<MapData> {
   const response = await axios.delete(url, { data: mapData });
   return response.data;
 }
+
+export async function removeAllMarkers(): Promise<Array<MapData>> {
+  const url = `${BASE_URL}/markers/`;
+  const response = await axios.delete(url);
+  return response.data;
+}
