@@ -1,7 +1,8 @@
 # Splot
 
-A quadruped robot built for AMD's Pervasive AI Contest 2024.
+A quadruped robot built for AMD's Pervasive AI Contest 2024.  
 
+![](https://github.com/naterpotatoers/Splot/blob/main/splot-gif.gif)
 
 ## Installing
 * Compute platform: Raspberry Pi 4 8Gb Model
